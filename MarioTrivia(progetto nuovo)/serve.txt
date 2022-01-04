@@ -1,0 +1,115 @@
+blocco controlli: 
+        if (situa[9] == situa[12] && situa[12] == situa[15]) {
+            win[0] = 9;
+            win[1] = 12;
+            win[2] = 15;
+            tr2 = true;
+            return win;
+        } else if (situa[10] == situa[13] && situa[13] == situa[16]) {
+            win[0] = 10;
+            win[1] = 13;
+            win[2] = 16;
+            tr2 = true;
+            return win;
+        } else if (situa[11] == situa[14] && situa[14] == situa[17]) {
+            win[0] = 11;
+            win[1] = 14;
+            win[2] = 17;
+            tr2 = true;
+            return win;
+        } else if (situa[9] == situa[10] && situa[10] == situa[11]) {
+            win[0] = 9;
+            win[1] = 10;
+            win[2] = 11;
+            tr2 = true;
+            return win;
+        } else if (situa[12] == situa[13] && situa[13] == situa[14]) {
+            win[0] = 12;
+            win[1] = 13;
+            win[2] = 14;
+            tr2 = true;
+            return win;
+        } else if (situa[15] == situa[16] && situa[16] == situa[17]) {
+            win[0] = 15;
+            win[1] = 16;
+            win[2] = 17;
+            tr2 = true;
+            return win;
+        } else if (situa[9] == situa[13] && situa[13] == situa[17]) {
+            win[0] = 9;
+            win[1] = 13;
+            win[2] = 17;
+            tr2 = true;
+            return win;
+        } else if (situa[11] == situa[13] && situa[13] == situa[15]) {
+            win[0] = 11;
+            win[1] = 13;
+            win[2] = 15;
+            tr2 = true;
+            return win;
+        }
+
+controllo posizionmi:
+
+     if (!tr2) {
+                if (x > 849 && x < 999 && y > 199 && y < 370) {
+                    cx[9] = Math.round((999 - 120));
+                    cy[9] = Math.round((370 + 199) / 2);
+                    pos[9] = true;
+                }
+                if (x > 849 && x < 999 && y > 373 && y < 530) {
+                    cx[10] = Math.round((999 - 120));
+                    cy[10] = Math.round((530 - 20) / 2) + 190;
+                    pos[10] = true;
+                }
+                if (x > 849 && x < 999 && y > 534 && y < 699) {
+                    cx[11] = Math.round((999 - 120));
+                    cy[11] = Math.round((699 + 140) / 2) + 190;
+                    pos[11] = true;
+                }
+                if (x > 1003 && x < 1199 && y > 199 && y < 369) {
+                    cx[12] = Math.round((1199 - 145));
+                    cy[12] = Math.round((369 + 199) / 2);
+                    pos[12] = true;
+                }
+                if (x > 1003 && x < 1199 && y > 373 && y < 530) {
+                    cx[13] = Math.round((1199 - 145));
+                    cy[13] = Math.round((530 - 20) / 2) + 190;
+                    pos[13] = true;
+                }
+                if (x > 1003 && x < 1199 && y > 534 && y < 699) {
+                    cx[14] = Math.round((1199 - 145));
+                    cy[14] = Math.round((699 + 140) / 2) + 190;
+                    pos[14] = true;
+                }
+                if (x > 1203 && x < 1349 && y > 199 && y < 370) {
+                    cx[15] = Math.round((1349 - 120));
+                    cy[15] = Math.round((369 + 199) / 2);
+                    pos[15] = true;
+                }
+                if (x > 1203 && x < 1349 && y > 373 && y < 530) {
+                    cx[16] = Math.round((1349 - 120));
+                    cy[16] = Math.round((530 - 20) / 2) + 190;
+                    pos[16] = true;
+                }
+                if (x > 1203 && x < 1349 && y > 534 && y < 699) {
+                    cx[17] = Math.round((1349 - 120));
+                    cy[17] = Math.round((699 + 140) / 2) + 190;
+                    pos[17] = true;
+                }
+            }
+
+disegno piano:
+
+       for (int i = 0, l = 1000; i < 5; i++, l++) {
+            offgc.drawLine(l, 150, l, 650);
+        }
+        for (int i = 0, l = 1200; i < 5; i++, l++) {
+            offgc.drawLine(l, 150, l, 650);
+        }
+        for (int i = 0, l = 320; i < 5; i++, l++) {
+            offgc.drawLine(850, l, 1350, l);
+        }
+        for (int i = 0, l = 480; i < 5; i++, l++) {
+            offgc.drawLine(850, l, 1350, l);
+        }
