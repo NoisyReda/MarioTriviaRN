@@ -89,8 +89,11 @@ public class SchermataConnessione extends javax.swing.JFrame {
         } catch (UnknownHostException ex) {
             java.util.logging.Logger.getLogger(SchermataConnessione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+         byte[] buffer = new byte[1500];
+            DatagramPacket Packet = new DatagramPacket(buffer, buffer.length);
         try {
-            u.ApriConnessione(i, this);
+            //u.ApriConnessione(i, this);
+            u.ControllaY("", Packet, this);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(SchermataConnessione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }

@@ -6,6 +6,7 @@
 package mariotrivia;
 
 import java.awt.Image;
+import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,6 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
     public SelezionePersonaggio(ScambioMessaggi scambio) {
         initComponents();
         s = scambio;
-        s.playerospite.setImg(2);
         if (s.playerospite.getImg() == 1) {
             Personaggio1.setVisible(false);
         } else if (s.playerospite.getImg()==2) {
@@ -153,7 +153,12 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(4);
-        //invio all'altro giocatore quale personaggio ho scelto
+        try {
+            //invio all'altro giocatore quale personaggio ho scelto
+            s.InviaPacchetto("p;"+nome.getText()+"4");
+        } catch (IOException ex) {
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (true) {
             Mappa m = new Mappa();
             m.show();
@@ -166,9 +171,17 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(1);
+        /*try {
+            s.InviaPacchetto("p;"+nome.getText()+"1");
+        } catch (IOException ex) {
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+*/
+        //quando l'altro seleziona il personaggio apri la mappa
         if (true) {
+            SchermataGiocoSpam sc=new SchermataGiocoSpam(s);
             Mappa m = new Mappa();
-            m.show();
+            sc.show();
             this.hide();
         }
     }//GEN-LAST:event_Personaggio1MouseClicked
@@ -177,6 +190,12 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(2);
+        try {
+            s.InviaPacchetto("p;"+nome.getText()+"2");
+        } catch (IOException ex) {
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         if (true) {
             Mappa m = new Mappa();
             m.show();
@@ -188,6 +207,12 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(3);
+        try {
+            s.InviaPacchetto("p;"+nome.getText()+"3");
+        } catch (IOException ex) {
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         if (true) {
             Mappa m = new Mappa();
             m.show();

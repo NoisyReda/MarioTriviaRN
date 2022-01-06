@@ -29,6 +29,7 @@ public class ScambioMessaggi extends Thread {
     int stato = 0;
     InetAddress ipdestinazione;
     Giocatore playerospite, playerlocale;
+    int spostamento=0;
 
     public ScambioMessaggi() throws SocketException {
         server = new DatagramSocket(12345);
@@ -80,6 +81,9 @@ public class ScambioMessaggi extends Thread {
             case "s":
                 Spostamento();
                 break;
+            case "M":
+                GiocoMelanzane(mess);
+                break;
         }
     }
 
@@ -89,7 +93,7 @@ public class ScambioMessaggi extends Thread {
         String str = "";
         int name = JOptionPane.showConfirmDialog(null, "Accetti?", "", JOptionPane.YES_NO_OPTION);
         if (name == JOptionPane.YES_OPTION) {
-            str = "y;" + name + ";";
+            str = "y;.";
             byte[] buffer = str.getBytes();
             DatagramPacket Packet = new DatagramPacket(buffer, buffer.length);
             InetAddress indirizzo;
@@ -113,18 +117,18 @@ public class ScambioMessaggi extends Thread {
 
     public void ControllaY(String m, DatagramPacket p, JFrame f) throws IOException {
 
-        if (m.length() > 2 && stato == 0) {
+        /*if (m.length() > 2 && stato == 0) {
             System.out.println("Ricevo Riscontro Y;NomeDestinatario");
-            InviaPacchetto("y;", p.getAddress());
+            InviaPacchetto("y;");
             stato = 1;
             ipdestinazione = p.getAddress();
-        } else if (stato == 1) {
-        System.out.println("Apro Ufficialmente la Comunicazione");
-        connesso = true;
-        SelezionePersonaggio s = new SelezionePersonaggio(this);
-        s.show();
-        f.hide();
-       }
+        } else if (stato == 1) {*/
+            System.out.println("Apro Ufficialmente la Comunicazione");
+            connesso = true;
+            SelezionePersonaggio s = new SelezionePersonaggio(this);
+            s.show();
+            f.hide();
+        //}
 
     }
 
@@ -137,13 +141,14 @@ public class ScambioMessaggi extends Thread {
     public void ApriConnessione(InetAddress i, JFrame f) throws IOException {
         System.out.println("Invio Messaggio Per Richiesta Connessione");
         String str = "a;";
-        InviaPacchetto(str, i);
+        ipdestinazione = i;
+        InviaPacchetto(str);
         frame = f;
     }
 
     public void Scrivi(String m) throws IOException {
 
-        InviaPacchetto("m;" + m, ipdestinazione);
+        InviaPacchetto("m;" + m);
     }
 
     public void Chiudi() throws IOException {
@@ -154,16 +159,16 @@ public class ScambioMessaggi extends Thread {
     }
 
     public void Disconnetti() throws IOException {
-        InviaPacchetto("c", ipdestinazione);
+        InviaPacchetto("c");
         ipdestinazione = null;
         connesso = false;
         stato = 0;
     }
 
-    public void InviaPacchetto(String messaggio, InetAddress indirizzo) throws IOException {
+    public void InviaPacchetto(String messaggio) throws IOException {
         byte[] buffer = messaggio.getBytes();
         DatagramPacket p = new DatagramPacket(buffer, buffer.length);
-        p.setAddress(indirizzo);
+        p.setAddress(ipdestinazione);
         p.setPort(porta);
         client.send(p);
     }
@@ -193,4 +198,10 @@ public class ScambioMessaggi extends Thread {
 
     }
 
+    public void GiocoMelanzane(String m) {
+        String s = m.substring(2);
+        if (s != "") {
+            spostamento+=10;
+        }
+    }
 }

@@ -5,6 +5,15 @@
  */
 package mariotrivia;
 
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author Mattia
@@ -15,10 +24,56 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
      * Creates new form SchermataGiocoSpam
      */
     GiocoSpam g;
+    ScambioMessaggi s;
+    ProvaTimer p;
+    int counterlocale = 0;
+    int counterospite = 0;
+    int secondimancanti = 10, arrivo = 1000, immagine = 0;
+    boolean vittoriasconfitta = false;
+
     public SchermataGiocoSpam() {
         initComponents();
-        g=new GiocoSpam();
-        g.giocatore.setPlayer("");//nome da prendere appena si avvia la partita
+        g = new GiocoSpam(this);
+        p = new ProvaTimer();
+        g.start();
+        p.start();
+
+    }
+
+    public SchermataGiocoSpam(ScambioMessaggi scambio) {
+        initComponents();
+        g = new GiocoSpam(this);
+        p = new ProvaTimer();
+        p.start();
+        g.start();
+        s = scambio;
+
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Image offscreen = createImage(this.getWidth(), this.getHeight());
+        Graphics offgc = offscreen.getGraphics();
+        Graphics offgc2 = offscreen.getGraphics();
+        immagine = s.playerlocale.getImg();
+
+        String str = "src\\image\\" + immagine + ".png";
+        if (!vittoriasconfitta) {
+            offgc.drawImage(new ImageIcon(str).getImage(), counterlocale, 50, null);
+        }
+        immagine = s.playerospite.getImg();
+        str = "src\\image\\" + immagine + ".png";
+        offgc.drawImage(new ImageIcon(str).getImage(), s.spostamento, 250, null);
+
+        if (s.spostamento == arrivo) {
+            offgc.drawImage(new ImageIcon("src\\image\\perso.png").getImage(), 50, 50, null);
+        }
+        if (vittoriasconfitta) {
+            offgc.drawImage(new ImageIcon("src\\image\\vittoria.png").getImage(), 50, 50, null);
+            //offgc.drawLine(0, 0, 150, 150);
+
+        }
+        g.drawImage(offscreen, 100, 100, null);
     }
 
     /**
@@ -30,14 +85,13 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Click!");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
             }
         });
 
@@ -45,27 +99,34 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(178, 178, 178)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(194, Short.MAX_VALUE))
+            .addGap(0, 1130, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jButton1)
-                .addContainerGap(176, Short.MAX_VALUE))
+            .addGap(0, 558, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-        g.IncrementoPunteggio();
-        System.out.println(g.giocatore.getPunteggio());
-    }//GEN-LAST:event_jButton1ActionPerformed
+
+        
+    }//GEN-LAST:event_formKeyPressed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        // TODO add your handling code here:
+        System.out.println(evt.getKeyCode());
+        if (g.isTimer() && vittoriasconfitta == false) {
+            if (evt.getKeyCode() == 32 && s.spostamento < arrivo) {
+                counterlocale += 10;
+                if (counterlocale == arrivo) {
+                    vittoriasconfitta = true;
+                }
+            }
+        }
+    }//GEN-LAST:event_formKeyReleased
 
     /**
      * @param args the command line arguments
@@ -103,6 +164,5 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables
 }
