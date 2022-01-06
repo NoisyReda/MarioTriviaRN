@@ -17,7 +17,6 @@ import javax.swing.SwingUtilities;
 public class Tris extends javax.swing.JFrame {
 
     private boolean tr1;
-    private boolean tr2;
     private boolean pos[];
     private int cx[];
     private int cy[];
@@ -32,7 +31,6 @@ public class Tris extends javax.swing.JFrame {
         cx = new int[18];
         cy = new int[18];
         tr1 = false;
-        tr2 = false;
         situa = new char[36];
         for (int i = 0; i < situa.length; i++) {
             situa[i] = (char) i;
@@ -56,7 +54,7 @@ public class Tris extends javax.swing.JFrame {
         }
         for (int i = 0, l = 480; i < 5; i++, l++) {
             offgc.drawLine(50, l, 550, l);
-        } 
+        }
         boolean start = false;
         for (int i = 0; i < pos.length; i++) {
             if (pos[i] == true) {
@@ -126,7 +124,7 @@ public class Tris extends javax.swing.JFrame {
             win[2] = 6;
             tr1 = true;
             return win;
-        }             
+        }
         return null;
     }
 
@@ -212,7 +210,7 @@ public class Tris extends javax.swing.JFrame {
                     pos[8] = true;
                 }
             }
-       
+
         }
     }//GEN-LAST:event_formMousePressed
 
