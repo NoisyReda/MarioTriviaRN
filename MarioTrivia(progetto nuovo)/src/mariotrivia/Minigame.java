@@ -11,5 +11,6 @@ package mariotrivia;
  * @author Redaelli_Mattia03
  */
 public class Minigame {
-    // System.out.println("");
+   
+    
 }
