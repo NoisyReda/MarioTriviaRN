@@ -16,13 +16,22 @@ public class Giocatore {
     private int punteggio;
     private String player;
     private int img;
-    private boolean turno;
-
+    private boolean turno, host;
+    
     public Giocatore() {
         punteggio=0;
         player="";
         img=0;
         turno=false;
+        host=false;
+    }
+
+    public boolean isHost() {
+        return host;
+    }
+
+    public void setHost(boolean host) {
+        this.host = host;
     }
 
     public void incrementapunteggio(){

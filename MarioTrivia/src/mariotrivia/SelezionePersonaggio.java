@@ -24,6 +24,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
      * Creates new form SelezionePersonaggio
      */
     ScambioMessaggi s;
+    GiocoPesci p;
 
     public SelezionePersonaggio() throws SocketException {
         initComponents();
@@ -32,15 +33,6 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
     public SelezionePersonaggio(ScambioMessaggi scambio) {
         initComponents();
         s = scambio;
-        if (s.playerospite.getImg() == 1) {
-            Personaggio1.setVisible(false);
-        } else if (s.playerospite.getImg()==2) {
-            Personaggio2.setVisible(false);
-        } else if (s.playerospite.getImg() == 3) {
-            Personaggio3.setVisible(false);
-        } else if (s.playerospite.getImg() == 4) {
-            Personaggio4.setVisible(false);
-        }
     }
 
     /**
@@ -153,16 +145,25 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(4);
+        if (s.playerospite.getPlayer().equals("")) {
+            s.playerlocale.setTurno(true);
+        }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
-            s.InviaPacchetto("p;"+nome.getText()+"4");
+            s.InviaPacchetto("p;" + nome.getText() + ";4");
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (true) {
-            Mappa m = new Mappa();
-            m.show();
-            this.hide();
+            SchermataGiocoPesci sc;
+            try {
+                sc = new SchermataGiocoPesci(s);
+                sc.show();
+                this.hide();
+            } catch (IOException ex) {
+                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
 
     }//GEN-LAST:event_Personaggio4MouseClicked
@@ -171,18 +172,25 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(1);
-        /*try {
-            s.InviaPacchetto("p;"+nome.getText()+"1");
+        if (s.playerospite.getPlayer().equals("")) {
+            s.playerlocale.setTurno(true);
+        }
+        try {
+            //invio all'altro giocatore quale personaggio ho scelto
+            s.InviaPacchetto("p;" + nome.getText() + ";1");
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-*/
-        //quando l'altro seleziona il personaggio apri la mappa
         if (true) {
-            SchermataGiocoSpam sc=new SchermataGiocoSpam(s);
-            Mappa m = new Mappa();
-            sc.show();
-            this.hide();
+            SchermataGiocoPesci sc;
+            try {
+                sc = new SchermataGiocoPesci(s);
+                sc.show();
+                this.hide();
+            } catch (IOException ex) {
+                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }//GEN-LAST:event_Personaggio1MouseClicked
 
@@ -190,16 +198,25 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(2);
+        if (s.playerospite.getPlayer().equals("")) {
+            s.playerlocale.setTurno(true);
+        }
         try {
-            s.InviaPacchetto("p;"+nome.getText()+"2");
+            //invio all'altro giocatore quale personaggio ho scelto
+            s.InviaPacchetto("p;" + nome.getText() + ";2");
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         if (true) {
-            Mappa m = new Mappa();
-            m.show();
-            this.hide();
+            SchermataGiocoPesci sc;
+            try {
+                sc = new SchermataGiocoPesci(s);
+                sc.show();
+                this.hide();
+            } catch (IOException ex) {
+                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }//GEN-LAST:event_Personaggio2MouseClicked
 
@@ -207,16 +224,25 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         // TODO add your handling code here:
         s.playerlocale.setPlayer(nome.getText());
         s.playerlocale.setImg(3);
+        if (s.playerospite.getPlayer().equals("")) {
+            s.playerlocale.setTurno(true);
+        }
         try {
-            s.InviaPacchetto("p;"+nome.getText()+"3");
+            //invio all'altro giocatore quale personaggio ho scelto
+            s.InviaPacchetto("p;" + nome.getText() + ";3");
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         if (true) {
-            Mappa m = new Mappa();
-            m.show();
-            this.hide();
+            SchermataGiocoPesci sc;
+            try {
+                sc = new SchermataGiocoPesci(s);
+                sc.show();
+                this.hide();
+            } catch (IOException ex) {
+                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
     }//GEN-LAST:event_Personaggio3MouseClicked
 

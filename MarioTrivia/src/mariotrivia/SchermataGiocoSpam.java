@@ -8,6 +8,7 @@ package mariotrivia;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -58,12 +59,19 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
         immagine = s.playerlocale.getImg();
 
         String str = "src\\image\\" + immagine + ".png";
+        System.out.println("locale" + str);
+
         if (!vittoriasconfitta) {
             offgc.drawImage(new ImageIcon(str).getImage(), counterlocale, 50, null);
         }
+
         immagine = s.playerospite.getImg();
         str = "src\\image\\" + immagine + ".png";
-        offgc.drawImage(new ImageIcon(str).getImage(), s.spostamento, 250, null);
+        System.out.println("ospite" + str);
+
+        if (!vittoriasconfitta) {
+            offgc.drawImage(new ImageIcon(str).getImage(), s.spostamento, 250, null);
+        }
 
         if (s.spostamento == arrivo) {
             offgc.drawImage(new ImageIcon("src\\image\\perso.png").getImage(), 50, 50, null);
@@ -74,6 +82,7 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
 
         }
         g.drawImage(offscreen, 100, 100, null);
+        //aggiungere linea traguardo e magari uno sfondo carino, ridimensionare immagini vittoria e sconfittas
     }
 
     /**
@@ -111,16 +120,18 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
-
-        
     }//GEN-LAST:event_formKeyPressed
 
     private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
         // TODO add your handling code here:
-        System.out.println(evt.getKeyCode());
         if (g.isTimer() && vittoriasconfitta == false) {
             if (evt.getKeyCode() == 32 && s.spostamento < arrivo) {
                 counterlocale += 10;
+                try {
+                    s.Scrivi("M;.");
+                } catch (IOException ex) {
+                    Logger.getLogger(SchermataGiocoSpam.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 if (counterlocale == arrivo) {
                     vittoriasconfitta = true;
                 }

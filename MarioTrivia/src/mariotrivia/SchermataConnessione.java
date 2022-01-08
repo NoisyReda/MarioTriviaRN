@@ -23,10 +23,10 @@ public class SchermataConnessione extends javax.swing.JFrame {
      * Creates new form SchermataConnessione
      */
     ScambioMessaggi u;
-    
+
     public SchermataConnessione() throws SocketException {
         initComponents();
-        u = new ScambioMessaggi();
+        u = new ScambioMessaggi(this);
         u.start();
     }
 
@@ -89,15 +89,14 @@ public class SchermataConnessione extends javax.swing.JFrame {
         } catch (UnknownHostException ex) {
             java.util.logging.Logger.getLogger(SchermataConnessione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         byte[] buffer = new byte[1500];
-            DatagramPacket Packet = new DatagramPacket(buffer, buffer.length);
+        byte[] buffer = new byte[1500];
+        DatagramPacket Packet = new DatagramPacket(buffer, buffer.length);
         try {
-            //u.ApriConnessione(i, this);
-            u.ControllaY("", Packet, this);
+            u.ApriConnessione(i);
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(SchermataConnessione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        
+
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

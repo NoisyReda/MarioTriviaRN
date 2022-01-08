@@ -10,6 +10,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -24,20 +26,22 @@ public class ScambioMessaggi extends Thread {
 
     DatagramSocket server, client;
     boolean connesso;
-    int porta = 12346;
+    int porta = 12345;
     JFrame frame = new JFrame();
     int stato = 0;
     InetAddress ipdestinazione;
     Giocatore playerospite, playerlocale;
-    int spostamento=0;
+    int spostamento = 0;
+    GiocoPesci p;
 
-    public ScambioMessaggi() throws SocketException {
-        server = new DatagramSocket(12345);
+    public ScambioMessaggi(JFrame f) throws SocketException {
+        server = new DatagramSocket(12346);
         client = new DatagramSocket();
         connesso = false;
         playerospite = new Giocatore();
         playerlocale = new Giocatore();
-
+        frame = f;
+        p = new GiocoPesci();
     }
 
     @Override
@@ -66,7 +70,7 @@ public class ScambioMessaggi extends Thread {
                 Apertura(mess, p);
                 break;
             case "y":
-                //ControllaY(mess, p);
+                ControllaY(mess, p);
                 break;
             case "n":
                 ConnessioneRifiutata();
@@ -84,12 +88,17 @@ public class ScambioMessaggi extends Thread {
             case "M":
                 GiocoMelanzane(mess);
                 break;
+            case "P":
+                GiocoPesci(mess);
+                break;
+            case "E":
+                SceltaPesce(mess);
+                break;
         }
     }
 
     public void Apertura(String m, DatagramPacket p) throws IOException {
 
-        System.out.println("Ricevo Richiesta Di Connessione");
         String str = "";
         int name = JOptionPane.showConfirmDialog(null, "Accetti?", "", JOptionPane.YES_NO_OPTION);
         if (name == JOptionPane.YES_OPTION) {
@@ -115,20 +124,19 @@ public class ScambioMessaggi extends Thread {
         }
     }
 
-    public void ControllaY(String m, DatagramPacket p, JFrame f) throws IOException {
-
-        /*if (m.length() > 2 && stato == 0) {
-            System.out.println("Ricevo Riscontro Y;NomeDestinatario");
+    public void ControllaY(String m, DatagramPacket p) throws IOException {
+        SelezionePersonaggio s = new SelezionePersonaggio(this);
+        if (m.length() > 2 && stato == 0) {
             InviaPacchetto("y;");
             stato = 1;
             ipdestinazione = p.getAddress();
-        } else if (stato == 1) {*/
-            System.out.println("Apro Ufficialmente la Comunicazione");
-            connesso = true;
-            SelezionePersonaggio s = new SelezionePersonaggio(this);
             s.show();
-            f.hide();
-        //}
+            frame.hide();
+        } else if (stato == 1) {
+            connesso = true;
+            s.show();
+            frame.hide();
+        }
 
     }
 
@@ -138,17 +146,14 @@ public class ScambioMessaggi extends Thread {
 
     }
 
-    public void ApriConnessione(InetAddress i, JFrame f) throws IOException {
-        System.out.println("Invio Messaggio Per Richiesta Connessione");
+    public void ApriConnessione(InetAddress i) throws IOException {
         String str = "a;";
         ipdestinazione = i;
         InviaPacchetto(str);
-        frame = f;
     }
 
     public void Scrivi(String m) throws IOException {
-
-        InviaPacchetto("m;" + m);
+        InviaPacchetto(m);
     }
 
     public void Chiudi() throws IOException {
@@ -177,13 +182,13 @@ public class ScambioMessaggi extends Thread {
         //split del messaggio e assegnamento valori agli attributi del player ospite
         String[] vett = messaggio.split(";");
         playerospite.setPlayer(vett[1]);
-        if (vett[2] == "1") {
+        if (vett[2].equals("1")) {
             playerospite.setImg(1);
-        } else if (vett[2] == "2") {
+        } else if (vett[2].equals("2")) {
             playerospite.setImg(2);
-        } else if (vett[2] == "3") {
+        } else if (vett[2].equals("3")) {
             playerospite.setImg(3);
-        } else if (vett[2] == "4") {
+        } else if (vett[2].equals("4")) {
             playerospite.setImg(4);
         }
 
@@ -197,11 +202,22 @@ public class ScambioMessaggi extends Thread {
     public void Spostamento() {
 
     }
-
     public void GiocoMelanzane(String m) {
         String s = m.substring(2);
         if (s != "") {
-            spostamento+=10;
+            spostamento += 10;
         }
+    }
+
+    public void GiocoPesci(String m) {
+        ArrayList<String> l = new ArrayList<String>(Arrays.asList(m.split(";")));
+        p.v = l;
+    }
+
+    public void SceltaPesce(String m) {
+        String[] vett = m.split(";");
+        p.scelta=Integer.parseInt(vett[1]);
+        System.out.println(p.scelta);
+        playerlocale.setTurno(true);
     }
 }

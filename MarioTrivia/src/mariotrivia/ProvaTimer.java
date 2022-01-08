@@ -22,7 +22,7 @@ public class ProvaTimer extends Thread {
         public void run() {
             if (secondimancanti >= 1){
                 secondimancanti--;
-                System.out.println("Secondi mancanti:" + secondimancanti);
+                //System.out.println("Secondi mancanti:" + secondimancanti);
             }
         }
     };
