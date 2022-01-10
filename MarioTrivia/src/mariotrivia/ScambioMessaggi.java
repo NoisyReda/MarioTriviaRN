@@ -193,7 +193,7 @@ public class ScambioMessaggi extends Thread {
         }
 
         //nel caso in cui l'ospte ha scelto per primo il personaggio sarà il primo a giocare
-        if (playerlocale.getPlayer() == "") {
+        if (playerlocale.getPlayer().equals("")) {
             playerospite.setTurno(true);
         }
 
@@ -217,7 +217,6 @@ public class ScambioMessaggi extends Thread {
     public void SceltaPesce(String m) {
         String[] vett = m.split(";");
         p.scelta=Integer.parseInt(vett[1]);
-        System.out.println(p.scelta);
         playerlocale.setTurno(true);
     }
 }

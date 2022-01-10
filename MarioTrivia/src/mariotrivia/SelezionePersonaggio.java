@@ -147,6 +147,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(4);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto

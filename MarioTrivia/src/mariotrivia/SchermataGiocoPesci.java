@@ -41,11 +41,13 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
         }
         new Thread(() -> {
             while (true) {
+                System.out.println(p.scelta);
                 if (p.scelta == 1) {
+                    System.out.println("Arrivato");
                     Pulsante1.setVisible(false);
                 } else if (p.scelta == 2) {
                     Pulsante2.setVisible(false);
-                }else if (p.scelta == 4) {
+                }else if (p.scelta == 3) {
                     Pulsante3.setVisible(false);
                 }else if (p.scelta == 4) {
                     Pulsante4.setVisible(false);
@@ -166,7 +168,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante1ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(1) == "t") {
+            if (p.v.get(0).equals("t")) {
                 Output.setText("SceltaCorretta");
                 //codice per inviare la scelta all'altro utente
             } else {
@@ -184,7 +186,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante2ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(2) == "t") {
+            if (p.v.get(1) .equals("t")) {
                 Output.setText("SceltaCorretta");
             } else {
                 Output.setText("SceltaErrata");
@@ -201,7 +203,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante3ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(3) == "t") {
+            if (p.v.get(2) .equals("t")) {
                 Output.setText("SceltaCorretta");
             } else {
                 Output.setText("SceltaErrata");
@@ -218,7 +220,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante4ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(4) == "t") {
+            if (p.v.get(3) .equals("t")) {
                 Output.setText("SceltaCorretta");
             } else {
                 Output.setText("SceltaErrata");
@@ -235,7 +237,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante5ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(5) == "t") {
+            if (p.v.get(4) .equals("t")) {
                 Output.setText("SceltaCorretta");
             } else {
                 Output.setText("SceltaErrata");
@@ -252,7 +254,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
     private void Pulsante6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante6ActionPerformed
         // TODO add your handling code here:
         if (scambio.playerlocale.isTurno()) {
-            if (p.v.get(6) == "t") {
+            if (p.v.get(5) .equals("t")) {
                 Output.setText("SceltaCorretta");
             } else {
                 Output.setText("SceltaErrata");
