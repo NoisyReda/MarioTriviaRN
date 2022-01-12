@@ -6,8 +6,6 @@
 package mariotrivia;
 
 import java.io.IOException;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -23,10 +21,11 @@ public class SchermataConnessione extends javax.swing.JFrame {
      * Creates new form SchermataConnessione
      */
     ScambioMessaggi u;
-
+    
     public SchermataConnessione() throws SocketException {
         initComponents();
         u = new ScambioMessaggi(this);
+        Condivisa.getInstance().setSc(u);
         u.start();
     }
 
@@ -96,7 +95,7 @@ public class SchermataConnessione extends javax.swing.JFrame {
         } catch (IOException ex) {
             java.util.logging.Logger.getLogger(SchermataConnessione.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-
+        
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -128,6 +127,7 @@ public class SchermataConnessione extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        Condivisa.getInstance();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {

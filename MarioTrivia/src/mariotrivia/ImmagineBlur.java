@@ -7,7 +7,11 @@ package mariotrivia;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.SocketException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.SwingUtilities;
 
@@ -27,11 +31,12 @@ public class ImmagineBlur extends javax.swing.JFrame {
     private boolean check;
     private int rand;
     private int pos[];
+    private boolean tim;
 
     public ImmagineBlur() {
         initComponents();
         Repaint r = new Repaint(this);
-        imgs = new Image[6];
+        imgs = new Image[8];
         for (int i = 0; i < imgs.length; i++) {
             imgs[i] = new ImageIcon("src\\image\\BlurGame\\" + (i + 1) + ".png").getImage().getScaledInstance(280, 200, Image.SCALE_DEFAULT);
         }
@@ -43,6 +48,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
         rand = 0;
         check = false;
         lost = false;
+        tim = false;
         pos = new int[3];
     }
 
@@ -56,9 +62,9 @@ public class ImmagineBlur extends javax.swing.JFrame {
             t.start();
             count++;
         }
-        if (Condivisa.getInstance().getTimer() >= 0 || count > 0) {
+        if (Condivisa.getInstance().getTimer() == 0 || count > 0) {
             count++;
-            if (!check) {
+            if (!check && tim) {
                 Random ran = new Random();
                 do {
                     rand = ran.nextInt(5 - 0 + 1) + 0;
@@ -67,17 +73,18 @@ public class ImmagineBlur extends javax.swing.JFrame {
                         check = true;
                     }
                 } while (!check);
-            } else {
+            } else if (tim == true) {
                 offgc.drawImage(imgs[rand], 390, 130, null);
                 for (int i = 0, c = 0; i < imgs.length; i++) {
-                    if (i % 2 == 0 && i != rand) {
+                    if (i % 2 == 0 && i != rand - 1) {
                         pos[c] = i;
                         c++;
                     }
                 }
-                offgc.drawImage(imgs[pos[0]], 390, 360, null);
-                offgc.drawImage(imgs[pos[1]], 50, 360, null);
-                offgc.drawImage(imgs[pos[2]], 730, 360, null);
+                offgc.drawImage(imgs[pos[0]], 50, 360, null);
+                offgc.drawImage(imgs[pos[1]], 390, 360, null);
+                offgc.drawImage(imgs[rand - 1], 730, 360, null);
+                offgc.drawImage(imgs[pos[2]], 390, 590, null);
             }
             if (count > 0) {
                 offgc.setFont(new Font("Sanserif", Font.BOLD, 150));
@@ -85,7 +92,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
             }
         } else {
             offgc.setFont(new Font("Sanserif", Font.BOLD, 150));
-            offgc.drawString(String.valueOf(Condivisa.getInstance().getTimer()), 500, 340);
+            offgc.drawString(String.valueOf(Condivisa.getInstance().getTimer()), 500, 450);
         }
         if (count > 1 && Condivisa.getInstance().getTimer() == 0) {
             lost = true;
@@ -118,7 +125,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGap(0, 905, Short.MAX_VALUE)
         );
 
         pack();
@@ -130,16 +137,32 @@ public class ImmagineBlur extends javax.swing.JFrame {
             int y = evt.getY();
             if (lost == false) {
                 if (x > 50 && x < 330 && y > 410 && y < 610) {
-                    check = false;
-                    count = 1;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("I;1");
+                    } catch (IOException ex) {
+                        Logger.getLogger(ImmagineBlur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 390 && x < 668 && y > 410 && y < 610) {
-                    check = false;
-                    count = 1;                    
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("I;2");
+                    } catch (IOException ex) {
+                        Logger.getLogger(ImmagineBlur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 729 && x < 1008 && y > 410 && y < 610) {
-                    check = false;
-                    count = 1;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("I;3");
+                    } catch (IOException ex) {
+                        Logger.getLogger(ImmagineBlur.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+            if (x > 390 && x < 668 && y > 640 && y < 840) {
+                try {
+                    Condivisa.getInstance().getSc().Scrivi("I;4");
+                } catch (IOException ex) {
+                    Logger.getLogger(ImmagineBlur.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

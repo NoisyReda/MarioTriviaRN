@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -66,35 +65,28 @@ public class ScambioMessaggi extends Thread {
 
     public void Elabora(String mess, DatagramPacket p) throws IOException {
         switch (mess.substring(0, 1)) {
-            case "a":
+            case "a" ->
                 Apertura(mess, p);
-                break;
-            case "y":
+            case "y" ->
                 ControllaY(mess, p);
-                break;
-            case "n":
+            case "n" ->
                 ConnessioneRifiutata();
-                break;
-            case "c":
+            case "c" ->
                 Chiudi();
-                break;
-            //fase di pick
-            case "p":
+            case "p" ->
                 Fasepick(mess);
-                break;
-            case "s":
+            case "s" ->
                 Spostamento();
-                break;
-            case "M":
+            case "M" ->
                 GiocoMelanzane(mess);
-                break;
-            case "P":
+            case "P" ->
                 GiocoPesci(mess);
-                break;
-            case "E":
+            case "E" ->
                 SceltaPesce(mess);
-                break;
+            case "S" ->
+                SCF(mess);
         }
+        //fase di pick
     }
 
     public void Apertura(String m, DatagramPacket p) throws IOException {
@@ -202,6 +194,7 @@ public class ScambioMessaggi extends Thread {
     public void Spostamento() {
 
     }
+
     public void GiocoMelanzane(String m) {
         String s = m.substring(2);
         if (s != "") {
@@ -216,7 +209,11 @@ public class ScambioMessaggi extends Thread {
 
     public void SceltaPesce(String m) {
         String[] vett = m.split(";");
-        p.scelta=Integer.parseInt(vett[1]);
+        p.scelta = Integer.parseInt(vett[1]);
         playerlocale.setTurno(true);
+    }
+
+    public void SCF(String mss) {       
+        Condivisa.getInstance().setMess("S"+mss);
     }
 }

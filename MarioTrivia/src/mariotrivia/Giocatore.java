@@ -5,8 +5,6 @@
  */
 package mariotrivia;
 
-import java.awt.Image;
-
 /**
  *
  * @author Mattia

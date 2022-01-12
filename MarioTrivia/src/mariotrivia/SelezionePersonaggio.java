@@ -5,14 +5,10 @@
  */
 package mariotrivia;
 
-import java.awt.Image;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 
 /**
  *
@@ -156,15 +152,17 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (true) {
-            SchermataGiocoPesci sc;
+            /*    SchermataGiocoPesci sc;
             try {
-                sc = new SchermataGiocoPesci(s);
-                sc.show();
-                this.hide();
+            sc = new SchermataGiocoPesci(s);
+            sc.show();
+            this.hide();
             } catch (IOException ex) {
-                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            Sascarfor s = new Sascarfor();
+            s.show();
+            this.hide();
         }
 
     }//GEN-LAST:event_Personaggio4MouseClicked

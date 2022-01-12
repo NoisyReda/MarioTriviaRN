@@ -7,6 +7,9 @@ package mariotrivia;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -23,6 +26,7 @@ public class Sascarfor extends javax.swing.JFrame {
     private TimerG t;
     private int count;
     private boolean lost;
+    private char choose;
 
     public Sascarfor() {
         initComponents();
@@ -37,6 +41,7 @@ public class Sascarfor extends javax.swing.JFrame {
         Condivisa.getInstance().setTime(10);
         t = new TimerG();
         t.start();
+        choose = ' ';
         count = 0;
     }
 
@@ -45,7 +50,7 @@ public class Sascarfor extends javax.swing.JFrame {
         Image offscreen = createImage(this.getWidth(), this.getHeight());
         Graphics offgc = offscreen.getGraphics();
         if (count == 1) {
-            Condivisa.getInstance().setTime(10);
+            Condivisa.getInstance().setTime(5);
             t = new TimerG();
             t.start();
             count++;
@@ -79,6 +84,26 @@ public class Sascarfor extends javax.swing.JFrame {
             lost = true;
         }
         g.drawImage(offscreen, 0, 50, null);
+        if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'S' && choose != ' ') {
+            if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'c') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 's') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 'c') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 'f') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'f') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 's') {
+
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == choose) {
+                pos = 0;
+                lost = false;
+                count = 0;
+                choose = ' ';
+            }
+        }
     }
 
     /**
@@ -129,8 +154,32 @@ public class Sascarfor extends javax.swing.JFrame {
             }
         }
         if (evt.getKeyCode() == 10 && !lost) {
-            //scelta effettuata
-            System.out.println("SESSO");
+            switch (pos) {
+                case 0 -> {
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("S;c");
+                        choose = 'c';
+                    } catch (IOException ex) {
+                        Logger.getLogger(Sascarfor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                case 1 -> {
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("S;s");
+                        choose = 's';
+                    } catch (IOException ex) {
+                        Logger.getLogger(Sascarfor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                case 2 -> {
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("S;f");
+                        choose = 'f';
+                    } catch (IOException ex) {
+                        Logger.getLogger(Sascarfor.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
         }
     }//GEN-LAST:event_formKeyPressed
 

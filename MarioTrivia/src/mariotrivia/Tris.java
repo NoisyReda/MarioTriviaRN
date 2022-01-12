@@ -8,6 +8,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
+import java.net.SocketException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 
 /**
@@ -168,46 +172,91 @@ public class Tris extends javax.swing.JFrame {
                     cx[0] = Math.round((198 - 49) / 2);
                     cy[0] = Math.round((370 - 199) / 2) + 190;
                     pos[0] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;1");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 49 && x < 198 && y > 373 && y < 530) {
                     cx[1] = Math.round((198 - 49) / 2);
                     cy[1] = Math.round((530 - 20) / 2) + 190;
                     pos[1] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;4");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 49 && x < 198 && y > 534 && y < 699) {
                     cx[2] = Math.round((198 - 49) / 2);
                     cy[2] = Math.round((699 + 140) / 2) + 190;
                     pos[2] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;7");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 203 && x < 400 && y > 199 && y < 369) {
                     cx[3] = Math.round((400 - 203) + 60);
                     cy[3] = Math.round((370 - 199) / 2) + 190;
                     pos[3] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;2");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 203 && x < 400 && y > 373 && y < 530) {
                     cx[4] = Math.round((400 - 203) + 60);
                     cy[4] = Math.round((530 - 20) / 2) + 190;
                     pos[4] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;5");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 203 && x < 400 && y > 534 && y < 699) {
                     cx[5] = Math.round((400 - 145));
                     cy[5] = Math.round((699 + 140) / 2) + 190;
                     pos[5] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;8");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 403 && x < 551 && y > 199 && y < 370) {
                     cx[6] = Math.round((550 - 120));
                     cy[6] = Math.round((370 - 199) / 2) + 190;
                     pos[6] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;3");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 403 && x < 551 && y > 373 && y < 530) {
                     cx[7] = Math.round((550 - 120));
                     cy[7] = Math.round((530 - 20) / 2) + 190;
                     pos[7] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;6");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 if (x > 403 && x < 551 && y > 534 && y < 699) {
                     cx[8] = Math.round((550 - 120));
                     cy[8] = Math.round((699 + 140) / 2) + 190;
                     pos[8] = true;
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;9");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
 
