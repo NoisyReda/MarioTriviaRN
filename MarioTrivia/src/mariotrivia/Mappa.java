@@ -5,7 +5,14 @@
  */
 package mariotrivia;
 
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -13,13 +20,118 @@ import java.util.Random;
  */
 public class Mappa extends javax.swing.JFrame {
 
+    private int ran;
+    private boolean st;
+
     /**
      * Creates new form Mappa
      */
-    Random rand = new Random();
-
     public Mappa() {
         initComponents();
+        Repaint r = new Repaint(this);
+        r.start();
+        ran = 0;
+        st = false;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        Image offscreen = createImage(this.getWidth(), this.getHeight());
+        Graphics offgc = offscreen.getGraphics();
+        offgc.drawImage(new ImageIcon("src\\image\\Mappa.jpeg").getImage(), 0, 0, 1000, 1000, this);
+        offgc.drawImage(new ImageIcon("src\\image\\dice.png").getImage(), 450, 130, 130, 130, this);
+        offgc.drawImage(new ImageIcon("src\\image\\1.png").getImage().getScaledInstance(256, 217, Image.SCALE_DEFAULT), 30, 15, this);
+        if (ran == 0) {
+            offgc.setFont(new Font(Font.SANS_SERIF, Font.ROMAN_BASELINE, 30));
+            offgc.drawString("TIRA", 477, 182);
+            offgc.drawString("IL", 503, 207);
+            offgc.drawString("DADO", 473, 232);
+        }
+        if (ran != 0) {
+            for (int i = 0; i < 30 && !st; i++) {
+                Random e = new Random();
+                switch (e.nextInt(7 - 1 + 0) + 1) {
+                    case 1 -> {
+                        offgc.fillOval(504, 183, 20, 20);
+                    }
+                    case 2 -> {
+                        offgc.fillOval(465, 145, 20, 20);
+                        offgc.fillOval(543, 220, 20, 20);
+                    }
+                    case 3 -> {
+                        offgc.fillOval(465, 145, 20, 20);
+                        offgc.fillOval(504, 183, 20, 20);
+                        offgc.fillOval(543, 220, 20, 20);
+                    }
+                    case 4 -> {
+                        offgc.fillOval(465, 145, 20, 20);
+                        offgc.fillOval(465, 220, 20, 20);
+                        offgc.fillOval(543, 145, 20, 20);
+                        offgc.fillOval(543, 220, 20, 20);
+                    }
+                    case 5 -> {
+                        offgc.fillOval(465, 145, 20, 20);
+                        offgc.fillOval(465, 220, 20, 20);
+                        offgc.fillOval(504, 183, 20, 20);
+                        offgc.fillOval(543, 145, 20, 20);
+                        offgc.fillOval(543, 220, 20, 20);
+                    }
+                    case 6 -> {
+                        offgc.fillOval(465, 145, 20, 20);
+                        offgc.fillOval(465, 183, 20, 20);
+                        offgc.fillOval(465, 220, 20, 20);
+                        offgc.fillOval(543, 145, 20, 20);
+                        offgc.fillOval(543, 183, 20, 20);
+                        offgc.fillOval(543, 220, 20, 20);
+                    }
+                }
+                g.drawImage(offscreen, 0, 50, null);
+                offgc.drawImage(new ImageIcon("src\\image\\Mappa.jpeg").getImage(), 0, 0, 1000, 1000, this);
+                offgc.drawImage(new ImageIcon("src\\image\\dice.png").getImage(), 450, 130, 130, 130, this);
+                try {
+                    Thread.sleep(70);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(Mappa.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            st = true;
+            switch (ran) {
+                case 1 -> {
+                    offgc.fillOval(504, 183, 20, 20);
+                }
+                case 2 -> {
+                    offgc.fillOval(465, 145, 20, 20);
+                    offgc.fillOval(543, 220, 20, 20);
+                }
+                case 3 -> {
+                    offgc.fillOval(465, 145, 20, 20);
+                    offgc.fillOval(504, 183, 20, 20);
+                    offgc.fillOval(543, 220, 20, 20);
+                }
+                case 4 -> {
+                    offgc.fillOval(465, 145, 20, 20);
+                    offgc.fillOval(465, 220, 20, 20);
+                    offgc.fillOval(543, 145, 20, 20);
+                    offgc.fillOval(543, 220, 20, 20);
+                }
+                case 5 -> {
+                    offgc.fillOval(465, 145, 20, 20);
+                    offgc.fillOval(465, 220, 20, 20);
+                    offgc.fillOval(504, 183, 20, 20);
+                    offgc.fillOval(543, 145, 20, 20);
+                    offgc.fillOval(543, 220, 20, 20);
+                }
+                case 6 -> {
+                    offgc.fillOval(465, 145, 20, 20);
+                    offgc.fillOval(465, 183, 20, 20);
+                    offgc.fillOval(465, 220, 20, 20);
+                    offgc.fillOval(543, 145, 20, 20);
+                    offgc.fillOval(543, 183, 20, 20);
+                    offgc.fillOval(543, 220, 20, 20);
+                }
+            }
+        }
+        g.drawImage(offscreen, 0, 50, null);
     }
 
     /**
@@ -31,33 +143,30 @@ public class Mappa extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton1.setText("Lancia il dado");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        setPreferredSize(new java.awt.Dimension(1000, 1050));
+        setResizable(false);
+        setSize(new java.awt.Dimension(1000, 1000));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 550, 100, 80));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/mappa.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1120, 740));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        int max = 6;
-        int int_random = rand.nextInt(max);
-        int_random += 1;
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        if (SwingUtilities.isLeftMouseButton(evt)) {
+            int x = evt.getX();
+            int y = evt.getY();
+            if (x > 450 && x < 580 && y > 182 && y < 310) {
+                Random i = new Random();
+                ran = i.nextInt(7 - 1 + 1) + 1;
+            }
+        }
+    }//GEN-LAST:event_formMouseClicked
 
     /**
      * @param args the command line arguments
@@ -76,13 +185,17 @@ public class Mappa extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Mappa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mappa.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Mappa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mappa.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Mappa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mappa.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Mappa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Mappa.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -95,7 +208,5 @@ public class Mappa extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
 }

@@ -66,7 +66,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
             if (!check && !tim) {
                 Random ran = new Random();
                 do {
-                    rand = ran.nextInt(5 - 0 + 1) + 0;
+                    rand = ran.nextInt(6 - 0 + 1) + 0;
                     if (rand % 2 != 0) {
                         offgc.drawImage(imgs[rand], 360, 130, null);
                         check = true;

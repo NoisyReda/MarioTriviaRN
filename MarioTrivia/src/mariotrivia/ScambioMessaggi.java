@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -26,24 +25,22 @@ public class ScambioMessaggi extends Thread {
 
     DatagramSocket server, client;
     boolean connesso;
-    int porta = 12345;
+    int porta = 12346;
     JFrame frame = new JFrame();
     int stato = 0;
     InetAddress ipdestinazione;
     Giocatore playerospite, playerlocale;
     int spostamento = 0;
     GiocoPesci p;
-    GiocoLato l;
 
     public ScambioMessaggi(JFrame f) throws SocketException {
-        server = new DatagramSocket(12346);
+        server = new DatagramSocket(12345);
         client = new DatagramSocket();
         connesso = false;
         playerospite = new Giocatore();
         playerlocale = new Giocatore();
         frame = f;
         p = new GiocoPesci();
-        l = new GiocoLato();
     }
 
     @Override
@@ -68,44 +65,32 @@ public class ScambioMessaggi extends Thread {
 
     public void Elabora(String mess, DatagramPacket p) throws IOException {
         switch (mess.substring(0, 1)) {
-            case "a":
+            case "a" ->
                 Apertura(mess, p);
-                break;
-            case "y":
+            case "y" ->
                 ControllaY(mess, p);
-                break;
-            case "n":
+            case "n" ->
                 ConnessioneRifiutata();
-                break;
-            case "c":
+            case "c" ->
                 Chiudi();
-                break;
-            //fase di pick
-            case "p":
+            case "p" ->
                 Fasepick(mess);
-                break;
-            case "s":
+            case "s" ->
                 Spostamento();
-                break;
-            case "M":
+            case "M" ->
                 GiocoMelanzane(mess);
-                break;
-            case "P":
+            case "P" ->
                 GiocoPesci(mess);
-                break;
-            case "E":
+            case "E" ->
                 SceltaPesce(mess);
-                break;
-            case "e":
-                PersoPesce(mess);
-                break;
-            case "L":
-                ElencoLato(mess);
-                break;
-            case "l":
-                AggiornaPuntiAvversario(mess);
-                break;
+            case "S" ->
+                mess(mess);
+            case "I" ->
+                mess(mess);
+            case "T" ->
+                mess(mess);
         }
+        //fase di pick
     }
 
     public void Apertura(String m, DatagramPacket p) throws IOException {
@@ -217,14 +202,13 @@ public class ScambioMessaggi extends Thread {
 
     public void GiocoMelanzane(String m) {
         String s = m.substring(2);
-        if (s.equals("avanti")) {
+        if (s != "") {
             spostamento += 10;
         }
     }
 
     public void GiocoPesci(String m) {
-        String vett = m.substring(2);
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(vett.split(";")));
+        ArrayList<String> l = new ArrayList<String>(Arrays.asList(m.split(";")));
         p.v = l;
     }
 
@@ -234,21 +218,8 @@ public class ScambioMessaggi extends Thread {
         playerlocale.setTurno(true);
     }
 
-    private void PersoPesce(String mess) {
-        String[] vett = mess.split(";");
-        if (vett[1].equals("perso")) {
-            p.finito = true;
-        }
+    public void mess(String mss) {
+        Condivisa.getInstance().setMess(mss);
     }
 
-    private void ElencoLato(String mess) {
-        String vett = mess.substring(2);
-        ArrayList<String> v = new ArrayList<String>(Arrays.asList(vett.split(";")));
-        l.v = v;
-    }
-
-    private void AggiornaPuntiAvversario(String mess) {
-        String[] vett = mess.split(";");
-        playerospite.setPunteggio(Integer.parseInt(vett[1]));
-    }
 }

@@ -23,13 +23,13 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
      */
     public SchermataGiocoPesci() {
         initComponents();
+
     }
 
     public SchermataGiocoPesci(ScambioMessaggi s) throws IOException {
         initComponents();
         scambio = s;
         p = s.p;
-        
         if (scambio.playerlocale.isHost()) {
             //generare stringa casuale di 6 caratteri separati da ";" da inviare all'utente
             p.random();
@@ -39,31 +39,22 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
             }
             scambio.InviaPacchetto(str);
         }
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-        }
         new Thread(() -> {
             while (true) {
-                System.out.println(scambio.p.finito);
+                System.out.println(p.scelta);
                 if (p.scelta == 1) {
+                    System.out.println("Arrivato");
                     Pulsante1.setVisible(false);
                 } else if (p.scelta == 2) {
                     Pulsante2.setVisible(false);
-                } else if (p.scelta == 3) {
+                }else if (p.scelta == 3) {
                     Pulsante3.setVisible(false);
-                } else if (p.scelta == 4) {
+                }else if (p.scelta == 4) {
                     Pulsante4.setVisible(false);
-                } else if (p.scelta == 5) {
+                }else if (p.scelta == 5) {
                     Pulsante5.setVisible(false);
-                } else if (p.scelta == 6) {
+                }else if (p.scelta == 6) {
                     Pulsante6.setVisible(false);
-                } else if (scambio.p.finito) {
-                    Mappa m = new Mappa();
-                    m.show();
-                    this.hide();
-                    break;
                 }
             }
         }).start();
@@ -176,162 +167,103 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
 
     private void Pulsante1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante1ActionPerformed
         // TODO add your handling code here:
-
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(0).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                    //codice per inviare la scelta all'altro utente
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-                try {
-                    scambio.Scrivi("E;1");
-                    Pulsante1.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(0).equals("t")) {
+                Output.setText("SceltaCorretta");
+                //codice per inviare la scelta all'altro utente
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;1");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante1ActionPerformed
 
     private void Pulsante2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante2ActionPerformed
         // TODO add your handling code here:
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(1).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-                try {
-                    scambio.Scrivi("E;2");
-                    Pulsante2.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(1) .equals("t")) {
+                Output.setText("SceltaCorretta");
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;2");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante2ActionPerformed
 
     private void Pulsante3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante3ActionPerformed
         // TODO add your handling code here:
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(2).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                try {
-                    scambio.Scrivi("E;3");
-                    Pulsante3.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(2) .equals("t")) {
+                Output.setText("SceltaCorretta");
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;3");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante3ActionPerformed
 
     private void Pulsante4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante4ActionPerformed
         // TODO add your handling code here:
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(3).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                try {
-                    scambio.Scrivi("E;4");
-                    Pulsante4.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(3) .equals("t")) {
+                Output.setText("SceltaCorretta");
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;4");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante4ActionPerformed
 
     private void Pulsante5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante5ActionPerformed
         // TODO add your handling code here:
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(4).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-                try {
-                    scambio.Scrivi("E;5");
-                    Pulsante5.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(4) .equals("t")) {
+                Output.setText("SceltaCorretta");
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;5");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante5ActionPerformed
 
     private void Pulsante6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Pulsante6ActionPerformed
         // TODO add your handling code here:
-        if (p.isTimer()) {
-            if (scambio.playerlocale.isTurno() && !scambio.p.finito) {
-                if (p.v.get(5).equals("t")) {
-                    Output.setText("SceltaCorretta");
-                } else {
-                    Output.setText("SceltaErrata");
-                    scambio.p.finito = true;
-                    try {
-                        scambio.Scrivi("e;perso");
-                    } catch (IOException ex) {
-                        Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                }
-                try {
-                    scambio.Scrivi("E;6");
-                    Pulsante6.setVisible(false);
-                    scambio.playerlocale.setTurno(false);
-                } catch (IOException ex) {
-                    Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        if (scambio.playerlocale.isTurno()) {
+            if (p.v.get(5) .equals("t")) {
+                Output.setText("SceltaCorretta");
+            } else {
+                Output.setText("SceltaErrata");
+            }
+            try {
+                scambio.Scrivi("E;6");
+                scambio.playerlocale.setTurno(false);
+            } catch (IOException ex) {
+                Logger.getLogger(SchermataGiocoPesci.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }//GEN-LAST:event_Pulsante6ActionPerformed

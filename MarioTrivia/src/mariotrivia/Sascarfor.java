@@ -105,7 +105,7 @@ public class Sascarfor extends javax.swing.JFrame {
                 choose = ' ';
                 res++;
             } else if (res > 2) {
-
+  this.hide();
             }
         }
     }

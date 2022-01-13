@@ -7,10 +7,6 @@ package mariotrivia;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -19,37 +15,21 @@ import java.util.logging.Logger;
 public class GiocoPesci extends Thread {
 
     ArrayList<String> v;
-    int scelta = 0;
+    int scelta=0;
     ScambioMessaggi s;
-    boolean finito = false, timer = false;
-
-    ;
-
 
     public GiocoPesci() {
         v = new ArrayList<String>(Arrays.asList(new String[]{"f", "f", "t", "t", "t", "t"}));
     }
 
     public void random() {
-        Collections.shuffle(v);
-    }
-
-    public boolean isTimer() {
-        return timer;
+        java.util.Collections.shuffle(v);
     }
 
     @Override
     public void run() {
-        AvviaTimer();
-        timer = true;
+        
     }
-
-    public void AvviaTimer() {
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(GiocoSpam.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+    
+    
 }

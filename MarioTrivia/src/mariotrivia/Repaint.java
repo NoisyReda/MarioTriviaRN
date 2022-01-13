@@ -26,7 +26,7 @@ public class Repaint extends Thread {
         while (true) {
             jf.repaint();
             try {
-                Thread.sleep(30);
+                Thread.sleep(10);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Repaint.class.getName()).log(Level.SEVERE, null, ex);
             }
