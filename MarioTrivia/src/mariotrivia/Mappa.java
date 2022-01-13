@@ -21,7 +21,7 @@ import javax.swing.SwingUtilities;
 public class Mappa extends javax.swing.JFrame {
 
     private int ran, xpersonaggiolocale, ypersonaggiolocale, xpersonaggioospite, ypersonaggioospite;
-    private boolean st;
+    private boolean st, beg, bivio, discesa, done;
     ScambioMessaggi scambio;
 
     /**
@@ -33,10 +33,14 @@ public class Mappa extends javax.swing.JFrame {
         r.start();
         ran = 0;
         st = false;
-        xpersonaggiolocale = 20;
-        ypersonaggiolocale =25;
-        xpersonaggioospite = 20;
-        ypersonaggioospite = 35;
+        beg = false;
+        done = false;
+        xpersonaggiolocale = 70;
+        ypersonaggiolocale = 50;
+        xpersonaggioospite = 70;
+        ypersonaggioospite = 90;
+        bivio = false;
+        discesa = false;
     }
 
     public Mappa(ScambioMessaggi s) {
@@ -62,10 +66,11 @@ public class Mappa extends javax.swing.JFrame {
         String str = "";
         //str = "src\\image\\" + scambio.playerlocale.getImg() + ".png";
         str = "src\\image\\1.png";
-        offgc.drawImage(new ImageIcon(str).getImage(), xpersonaggiolocale, ypersonaggiolocale, 30, 30, this);
+        if (!beg) {
+            offgc.drawImage(new ImageIcon(str).getImage(), xpersonaggiolocale, ypersonaggiolocale, 30, 30, this);
+        }
         //str = "src\\image\\" + scambio.playerospite.getImg() + ".png";
         //offgc.drawImage(new ImageIcon(str).getImage(), xpersonaggiolocale, ypersonaggiolocale, 30, 30, this);
-
         if (ran == 0) {
             offgc.setFont(new Font(Font.SANS_SERIF, Font.ROMAN_BASELINE, 30));
             offgc.drawString("TIRA", 477, 182);
@@ -119,6 +124,7 @@ public class Mappa extends javax.swing.JFrame {
                     Logger.getLogger(Mappa.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            beg = false;
             st = true;
             switch (ran) {
                 case 1 -> {
@@ -156,26 +162,50 @@ public class Mappa extends javax.swing.JFrame {
                 }
             }
         }
-        g.drawImage(offscreen, 0, 50, null);
-        if (Condivisa.getInstance().getMess().equals("1")) {
-            xpersonaggiolocale += 50;
-            xpersonaggioospite += 50;
-        } else if (Condivisa.getInstance().getMess().equals("2")) {
-            xpersonaggiolocale += 100;
-            xpersonaggioospite += 100;
-        } else if (Condivisa.getInstance().getMess().equals("3")) {
-            xpersonaggiolocale += 150;
-            xpersonaggioospite += 150;
-        } else if (Condivisa.getInstance().getMess().equals("4")) {
-            xpersonaggiolocale += 200;
-            xpersonaggioospite += 200;
-        } else if (Condivisa.getInstance().getMess().equals("5")) {
-            xpersonaggiolocale += 250;
-            xpersonaggioospite += 250;
-        } else if (Condivisa.getInstance().getMess().equals("6")) {
-            xpersonaggiolocale += 300;
-            xpersonaggioospite += 300;
+        if (!"".equals(Condivisa.getInstance().getMess())) {
+            if (Condivisa.getInstance().getMess().equals("1")) {
+                xpersonaggiolocale += 50;
+                xpersonaggioospite += 50;
+
+            } else if (Condivisa.getInstance().getMess().equals("2")) {
+                xpersonaggiolocale += 100;
+                xpersonaggioospite += 100;
+
+            } else if (Condivisa.getInstance().getMess().equals("3")) {
+                xpersonaggiolocale += 150;
+                xpersonaggioospite += 150;
+
+            } else if (Condivisa.getInstance().getMess().equals("4")) {
+                xpersonaggiolocale += 200;
+                xpersonaggioospite += 200;
+
+            } else if (Condivisa.getInstance().getMess().equals("5")) {
+                xpersonaggiolocale += 250;
+                xpersonaggioospite += 250;
+
+            } else if (Condivisa.getInstance().getMess().equals("6")) {
+                xpersonaggiolocale += 300;
+                xpersonaggioospite += 300;
+            }
+            if (xpersonaggioospite < 220 && xpersonaggioospite == 50) {
+                if (ran > 1 && xpersonaggioospite > 170) {
+                    bivio = true;
+                }
+            } else if (xpersonaggioospite == 220 && xpersonaggioospite == 50) {
+                bivio = true;
+            } else {
+                bivio = true;
+            }
+            if (xpersonaggioospite >= 870 && ypersonaggioospite == 50) {
+                xpersonaggioospite = 870;
+                ypersonaggioospite += 70;
+                discesa = true;
+            }
         }
+        if (bivio) {
+            //  System.out.println("BIVIO");
+        }
+        g.drawImage(offscreen, 0, 50, null);
     }
 
     /**
@@ -206,28 +236,89 @@ public class Mappa extends javax.swing.JFrame {
             //&& scambio.playerlocale.isTurno()
             int x = evt.getX();
             int y = evt.getY();
+            int man = 0, mosse = 0, disI = 0;
             if (x > 450 && x < 580 && y > 182 && y < 310) {
                 Random i = new Random();
                 ran = i.nextInt(7 - 1 + 1) + 1;
+                beg = true;
+                mosse = ran;
                 //scambio.playerlocale.setTurno(false);
-                if (ran == 1) {
-                    xpersonaggiolocale += 50;
-                    xpersonaggioospite += 50;
-                } else if (ran == 2) {
-                    xpersonaggiolocale += 100;
-                    xpersonaggioospite += 100;
-                } else if (ran == 3) {
-                    xpersonaggiolocale += 150;
-                    xpersonaggioospite += 150;
-                } else if (ran == 4) {
-                    xpersonaggiolocale += 200;
-                    xpersonaggioospite += 200;
-                } else if (ran == 5) {
-                    xpersonaggiolocale += 250;
-                    xpersonaggioospite += 250;
-                } else if (ran == 6) {
-                    xpersonaggiolocale += 300;
-                    xpersonaggioospite += 300;
+                if (!discesa) {
+                    if (ran == 1) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 50;
+                        xpersonaggioospite += 50;
+                    } else if (ran == 2) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 100;
+                        xpersonaggioospite += 100;
+                    } else if (ran == 3) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 150;
+                        xpersonaggioospite += 150;
+                    } else if (ran == 4) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 200;
+                        xpersonaggioospite += 200;
+                    } else if (ran == 5) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 250;
+                        xpersonaggioospite += 250;
+                    } else if (ran == 6) {
+                        man = xpersonaggiolocale;
+                        xpersonaggiolocale += 300;
+                        xpersonaggioospite += 300;
+                    }
+                }
+                if (ypersonaggiolocale >= 400) {
+                    done = true;
+                    switch (ran) {
+                        case 1 -> {
+                            xpersonaggiolocale -= 50;
+                            xpersonaggioospite -= 50;
+                        }
+                        case 2 -> {
+                            xpersonaggiolocale -= 100;
+                            xpersonaggioospite -= 100;
+                        }
+                        case 3 -> {
+                            xpersonaggiolocale -= 150;
+                            xpersonaggioospite -= 150;
+                        }
+                        case 4 -> {
+                            xpersonaggiolocale -= 200;
+                            xpersonaggioospite -= 200;
+                        }
+                        case 5 -> {
+                            xpersonaggiolocale -= 250;
+                            xpersonaggioospite -= 250;
+                        }
+                        case 6 -> {
+                            xpersonaggiolocale -= 300;
+                            xpersonaggioospite -= 300;
+                        }
+                    }
+                }
+                if (!done) {
+                    if (xpersonaggiolocale < 220 && ypersonaggiolocale == 50) {
+                        if (ran > 1 && xpersonaggiolocale > 170) {
+                            bivio = true;
+                        }
+                    } else if (xpersonaggiolocale == 220 && ypersonaggiolocale == 50) {
+                        bivio = true;
+                    } else {
+                        bivio = true;
+                    }
+                    if (xpersonaggiolocale > 870 && ypersonaggiolocale == 50) {
+                        disI = 870 - man;
+                        mosse = ran - disI / 50;
+                        xpersonaggiolocale = 870;
+                        ypersonaggiolocale += 50 * mosse;
+                        discesa = true;
+                    } else if (xpersonaggiolocale >= 870 && ypersonaggiolocale > 50) {
+                        xpersonaggioospite = 870;
+                        ypersonaggiolocale += 50 * ran;
+                    }
                 }
             }
         }

@@ -27,6 +27,14 @@ public class Giocatore {
         host = false;
     }
 
+    public int getSpostamento() {
+        return spostamento;
+    }
+
+    public void setSpostamento(int spostamento) {
+        this.spostamento = spostamento;
+    }
+
     public boolean isHost() {
         return host;
     }

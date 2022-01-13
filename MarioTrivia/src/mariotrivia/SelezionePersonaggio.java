@@ -161,7 +161,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-            Tris s = new Tris();
+            Mappa s = new Mappa();
             s.show();
             this.hide();
         }
