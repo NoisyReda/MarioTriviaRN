@@ -5,6 +5,8 @@
  */
 package mariotrivia;
 
+import java.util.Random;
+
 /**
  *
  * @author Mattia
@@ -14,6 +16,8 @@ public class Mappa extends javax.swing.JFrame {
     /**
      * Creates new form Mappa
      */
+    Random rand = new Random();
+
     public Mappa() {
         initComponents();
     }
@@ -34,6 +38,11 @@ public class Mappa extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jButton1.setText("Lancia il dado");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 550, 100, 80));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/mappa.png"))); // NOI18N
@@ -41,6 +50,14 @@ public class Mappa extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int max = 6;
+        int int_random = rand.nextInt(max);
+        int_random += 1;
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,7 +86,7 @@ public class Mappa extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */                
+        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Mappa().setVisible(true);

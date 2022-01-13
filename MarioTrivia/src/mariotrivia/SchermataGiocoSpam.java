@@ -5,9 +5,12 @@
  */
 package mariotrivia;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -26,23 +29,18 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
     ProvaTimer p;
     int counterlocale = 0;
     int counterospite = 0;
-    int secondimancanti = 10, arrivo = 1000, immagine = 0;
+    int secondimancanti = 10, arrivo = 100, immagine = 0;
     boolean vittoriasconfitta = false;
 
     public SchermataGiocoSpam() {
         initComponents();
-        g = new GiocoSpam(this);
-        p = new ProvaTimer();
-        g.start();
-        p.start();
-
     }
 
     public SchermataGiocoSpam(ScambioMessaggi scambio) {
         initComponents();
         g = new GiocoSpam(this);
         p = new ProvaTimer();
-        p.start();
+        //p.start();
         g.start();
         s = scambio;
 
@@ -125,7 +123,7 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
             if (evt.getKeyCode() == 32 && s.spostamento < arrivo) {
                 counterlocale += 10;
                 try {
-                    s.Scrivi("M;.");
+                    s.Scrivi("M;avanti");
                 } catch (IOException ex) {
                     Logger.getLogger(SchermataGiocoSpam.class.getName()).log(Level.SEVERE, null, ex);
                 }

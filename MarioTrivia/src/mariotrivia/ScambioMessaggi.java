@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -32,6 +33,7 @@ public class ScambioMessaggi extends Thread {
     Giocatore playerospite, playerlocale;
     int spostamento = 0;
     GiocoPesci p;
+    GiocoLato l;
 
     public ScambioMessaggi(JFrame f) throws SocketException {
         server = new DatagramSocket(12346);
@@ -41,6 +43,7 @@ public class ScambioMessaggi extends Thread {
         playerlocale = new Giocatore();
         frame = f;
         p = new GiocoPesci();
+        l = new GiocoLato();
     }
 
     @Override
@@ -65,28 +68,44 @@ public class ScambioMessaggi extends Thread {
 
     public void Elabora(String mess, DatagramPacket p) throws IOException {
         switch (mess.substring(0, 1)) {
-            case "a" ->
+            case "a":
                 Apertura(mess, p);
-            case "y" ->
+                break;
+            case "y":
                 ControllaY(mess, p);
-            case "n" ->
+                break;
+            case "n":
                 ConnessioneRifiutata();
-            case "c" ->
+                break;
+            case "c":
                 Chiudi();
-            case "p" ->
+                break;
+            //fase di pick
+            case "p":
                 Fasepick(mess);
-            case "s" ->
+                break;
+            case "s":
                 Spostamento();
-            case "M" ->
+                break;
+            case "M":
                 GiocoMelanzane(mess);
-            case "P" ->
+                break;
+            case "P":
                 GiocoPesci(mess);
-            case "E" ->
+                break;
+            case "E":
                 SceltaPesce(mess);
-            case "S" ->
-                SCF(mess);
+                break;
+            case "e":
+                PersoPesce(mess);
+                break;
+            case "L":
+                ElencoLato(mess);
+                break;
+            case "l":
+                AggiornaPuntiAvversario(mess);
+                break;
         }
-        //fase di pick
     }
 
     public void Apertura(String m, DatagramPacket p) throws IOException {
@@ -187,6 +206,7 @@ public class ScambioMessaggi extends Thread {
         //nel caso in cui l'ospte ha scelto per primo il personaggio sarà il primo a giocare
         if (playerlocale.getPlayer().equals("")) {
             playerospite.setTurno(true);
+            playerospite.setHost(true);
         }
 
     }
@@ -197,13 +217,14 @@ public class ScambioMessaggi extends Thread {
 
     public void GiocoMelanzane(String m) {
         String s = m.substring(2);
-        if (s != "") {
+        if (s.equals("avanti")) {
             spostamento += 10;
         }
     }
 
     public void GiocoPesci(String m) {
-        ArrayList<String> l = new ArrayList<String>(Arrays.asList(m.split(";")));
+        String vett = m.substring(2);
+        ArrayList<String> l = new ArrayList<String>(Arrays.asList(vett.split(";")));
         p.v = l;
     }
 
@@ -213,7 +234,21 @@ public class ScambioMessaggi extends Thread {
         playerlocale.setTurno(true);
     }
 
-    public void SCF(String mss) {       
-        Condivisa.getInstance().setMess("S"+mss);
+    private void PersoPesce(String mess) {
+        String[] vett = mess.split(";");
+        if (vett[1].equals("perso")) {
+            p.finito = true;
+        }
+    }
+
+    private void ElencoLato(String mess) {
+        String vett = mess.substring(2);
+        ArrayList<String> v = new ArrayList<String>(Arrays.asList(vett.split(";")));
+        l.v = v;
+    }
+
+    private void AggiornaPuntiAvversario(String mess) {
+        String[] vett = mess.split(";");
+        playerospite.setPunteggio(Integer.parseInt(vett[1]));
     }
 }

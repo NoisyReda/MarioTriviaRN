@@ -5,10 +5,14 @@
  */
 package mariotrivia;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 /**
  *
@@ -151,19 +155,10 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (true) {
-            /*    SchermataGiocoPesci sc;
-            try {
-            sc = new SchermataGiocoPesci(s);
+        SchermataGiocoLato sc;
+            sc = new SchermataGiocoLato(s);
             sc.show();
             this.hide();
-            } catch (IOException ex) {
-            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-            Sascarfor s = new Sascarfor();
-            s.show();
-            this.hide();
-        }
 
     }//GEN-LAST:event_Personaggio4MouseClicked
 
@@ -173,6 +168,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(1);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -180,17 +176,10 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (true) {
-            SchermataGiocoPesci sc;
-            try {
-                sc = new SchermataGiocoPesci(s);
-                sc.show();
-                this.hide();
-            } catch (IOException ex) {
-                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+        SchermataGiocoLato sc;
+            sc = new SchermataGiocoLato(s);
+            sc.show();
+            this.hide();
     }//GEN-LAST:event_Personaggio1MouseClicked
 
     private void Personaggio2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Personaggio2MouseClicked
@@ -199,6 +188,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(2);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -206,17 +196,11 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (true) {
-            SchermataGiocoPesci sc;
-            try {
-                sc = new SchermataGiocoPesci(s);
-                sc.show();
-                this.hide();
-            } catch (IOException ex) {
-                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+            SchermataGiocoLato sc;
+            sc = new SchermataGiocoLato(s);
+            sc.show();
+            this.hide();
+        
     }//GEN-LAST:event_Personaggio2MouseClicked
 
     private void Personaggio3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Personaggio3MouseClicked
@@ -225,6 +209,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(3);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -232,17 +217,10 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (true) {
-            SchermataGiocoPesci sc;
-            try {
-                sc = new SchermataGiocoPesci(s);
-                sc.show();
-                this.hide();
-            } catch (IOException ex) {
-                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
+        SchermataGiocoLato sc;
+            sc = new SchermataGiocoLato(s);
+            sc.show();
+            this.hide();
     }//GEN-LAST:event_Personaggio3MouseClicked
 
     /**

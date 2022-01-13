@@ -16,18 +16,22 @@ import java.util.logging.Logger;
  *
  * @author Mattia
  */
-public class GiocoPesci extends Thread {
+public class GiocoLato extends Thread {
 
-    ArrayList<String> v;
-    int scelta = 0;
-    ScambioMessaggi s;
-    boolean finito = false, timer = false;
+    ArrayList<String> v = new ArrayList<String>();
+    int contatore = 0;
+    boolean timer = false;
 
-    ;
+    public GiocoLato() {
+        String s = "";
+        Random rand = new Random(); //instance of random class
+        for (int i = 0; i < 6; i++) {
+            int max = 4;
+            int int_random = rand.nextInt(max);
+            int_random+=1;
+            v.add(Integer.toString(int_random));
+        }
 
-
-    public GiocoPesci() {
-        v = new ArrayList<String>(Arrays.asList(new String[]{"f", "f", "t", "t", "t", "t"}));
     }
 
     public void random() {

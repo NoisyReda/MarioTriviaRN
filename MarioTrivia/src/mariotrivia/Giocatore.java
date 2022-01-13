@@ -5,6 +5,8 @@
  */
 package mariotrivia;
 
+import java.awt.Image;
+
 /**
  *
  * @author Mattia
@@ -50,6 +52,9 @@ public class Giocatore {
 
     public void setPunteggio(int punteggio) {
         this.punteggio = punteggio;
+    }
+    public void aggiungiPunti(int punti){
+        this.punteggio+=punti;
     }
 
     public String getPlayer() {
