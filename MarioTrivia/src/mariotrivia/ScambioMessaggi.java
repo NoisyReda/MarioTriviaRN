@@ -202,7 +202,7 @@ public class ScambioMessaggi extends Thread {
 
     public void GiocoMelanzane(String m) {
         String s = m.substring(2);
-        if (s != "") {
+        if (!"".equals(s)) {
             spostamento += 10;
         }
     }
