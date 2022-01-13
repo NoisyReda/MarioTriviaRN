@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +30,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
     private boolean check;
     private int rand;
     private int pos[];
-    private boolean tim;
+    private boolean tim;    
 
     public ImmagineBlur() {
         initComponents();
@@ -98,6 +97,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
             lost = true;
         }
         g.drawImage(offscreen, 0, 50, null);
+        //if(Condivisa.getInstance().)
     }
 
     /**

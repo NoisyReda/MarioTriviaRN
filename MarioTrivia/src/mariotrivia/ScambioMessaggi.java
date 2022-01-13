@@ -25,7 +25,7 @@ public class ScambioMessaggi extends Thread {
 
     DatagramSocket server, client;
     boolean connesso;
-    int porta = 12345;
+    int porta = 12346;
     JFrame frame = new JFrame();
     int stato = 0;
     InetAddress ipdestinazione;
@@ -34,7 +34,7 @@ public class ScambioMessaggi extends Thread {
     GiocoPesci p;
 
     public ScambioMessaggi(JFrame f) throws SocketException {
-        server = new DatagramSocket(12346);
+        server = new DatagramSocket(12345);
         client = new DatagramSocket();
         connesso = false;
         playerospite = new Giocatore();
@@ -84,7 +84,11 @@ public class ScambioMessaggi extends Thread {
             case "E" ->
                 SceltaPesce(mess);
             case "S" ->
-                SCF(mess);
+                mess(mess);
+            case "I" ->
+                mess(mess);
+            case "T" ->
+                mess(mess);
         }
         //fase di pick
     }
@@ -187,6 +191,7 @@ public class ScambioMessaggi extends Thread {
         //nel caso in cui l'ospte ha scelto per primo il personaggio sarà il primo a giocare
         if (playerlocale.getPlayer().equals("")) {
             playerospite.setTurno(true);
+            playerospite.setHost(true);
         }
 
     }
@@ -213,7 +218,8 @@ public class ScambioMessaggi extends Thread {
         playerlocale.setTurno(true);
     }
 
-    public void SCF(String mss) {       
-        Condivisa.getInstance().setMess("S"+mss);
+    public void mess(String mss) {
+        Condivisa.getInstance().setMess(mss);
     }
+
 }

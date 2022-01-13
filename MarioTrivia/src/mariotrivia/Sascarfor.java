@@ -27,6 +27,7 @@ public class Sascarfor extends javax.swing.JFrame {
     private int count;
     private boolean lost;
     private char choose;
+    private int res;
 
     public Sascarfor() {
         initComponents();
@@ -43,6 +44,7 @@ public class Sascarfor extends javax.swing.JFrame {
         t.start();
         choose = ' ';
         count = 0;
+        res = 0;
     }
 
     @Override
@@ -50,12 +52,12 @@ public class Sascarfor extends javax.swing.JFrame {
         Image offscreen = createImage(this.getWidth(), this.getHeight());
         Graphics offgc = offscreen.getGraphics();
         if (count == 1) {
-            Condivisa.getInstance().setTime(5);
+            Condivisa.getInstance().setTime(10);
             t = new TimerG();
             t.start();
             count++;
         }
-        if (Condivisa.getInstance().getTimer() == 0 || count > 0) {
+        if (Condivisa.getInstance().getTimer() == 0 || count > 0 || res >= 1) {
             count++;
             offgc.setFont(new Font("Sanserif", Font.BOLD, 150));
             offgc.drawString("→", 90, 320);
@@ -86,22 +88,24 @@ public class Sascarfor extends javax.swing.JFrame {
         g.drawImage(offscreen, 0, 50, null);
         if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'S' && choose != ' ') {
             if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'c') {
-
+                this.hide();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 's') {
-
+                this.hide();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 'c') {
-
+                this.hide();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 'f') {
-
+                this.hide();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'f') {
-
+                this.hide();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 's') {
-
-            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == choose) {
+                this.hide();
+            } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == choose && res < 3) {
                 pos = 0;
                 lost = false;
-                count = 0;
                 choose = ' ';
+                res++;
+            } else if (res > 2) {
+
             }
         }
     }

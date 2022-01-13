@@ -144,6 +144,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
             s.playerlocale.setHost(true);
+            Condivisa.getInstance().setGio(s.playerlocale);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -160,7 +161,7 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             } catch (IOException ex) {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }*/
-            Sascarfor s = new Sascarfor();
+            Tris s = new Tris();
             s.show();
             this.hide();
         }
@@ -173,6 +174,8 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(1);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
+            Condivisa.getInstance().setGio(s.playerlocale);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -199,6 +202,8 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(2);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
+            Condivisa.getInstance().setGio(s.playerlocale);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
@@ -225,6 +230,8 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
         s.playerlocale.setImg(3);
         if (s.playerospite.getPlayer().equals("")) {
             s.playerlocale.setTurno(true);
+            s.playerlocale.setHost(true);
+            Condivisa.getInstance().setGio(s.playerlocale);
         }
         try {
             //invio all'altro giocatore quale personaggio ho scelto
