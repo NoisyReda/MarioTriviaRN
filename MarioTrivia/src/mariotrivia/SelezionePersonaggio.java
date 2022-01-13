@@ -184,15 +184,17 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (true) {
-            SchermataGiocoPesci sc;
+            /*    SchermataGiocoPesci sc;
             try {
-                sc = new SchermataGiocoPesci(s);
-                sc.show();
-                this.hide();
+            sc = new SchermataGiocoPesci(s);
+            sc.show();
+            this.hide();
             } catch (IOException ex) {
-                Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
+            }*/
+            ImmagineBlur ib = new ImmagineBlur();
+            ib.show();
+            this.hide();
         }
     }//GEN-LAST:event_Personaggio1MouseClicked
 
