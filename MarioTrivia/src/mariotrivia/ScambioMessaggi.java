@@ -32,6 +32,7 @@ public class ScambioMessaggi extends Thread {
     Giocatore playerospite, playerlocale;
     int spostamento = 0;
     GiocoPesci p;
+    GiocoLato l;
 
     public ScambioMessaggi(JFrame f) throws SocketException {
         server = new DatagramSocket(12345);
@@ -41,6 +42,7 @@ public class ScambioMessaggi extends Thread {
         playerlocale = new Giocatore();
         frame = f;
         p = new GiocoPesci();
+        l = new GiocoLato();
     }
 
     @Override
@@ -76,13 +78,25 @@ public class ScambioMessaggi extends Thread {
             case "p" ->
                 Fasepick(mess);
             case "s" ->
-                Spostamento();
+                Spostamento(mess);
             case "M" ->
                 GiocoMelanzane(mess);
             case "P" ->
                 GiocoPesci(mess);
             case "E" ->
                 SceltaPesce(mess);
+            case "e" -> {
+                PersoPesce(mess);
+                break;
+            }
+            case "L" -> {
+                ElencoLato(mess);
+                break;
+            }
+            case "l" -> {
+                AggiornaPuntiAvversario(mess);
+                break;
+            }
             case "S" ->
                 mess(mess);
             case "I" ->
@@ -196,8 +210,9 @@ public class ScambioMessaggi extends Thread {
 
     }
 
-    public void Spostamento() {
-
+    public void Spostamento(String mess) {
+        String[] vett = mess.split(";");
+        Condivisa.getInstance().setMess(vett[1]);
     }
 
     public void GiocoMelanzane(String m) {
@@ -220,6 +235,24 @@ public class ScambioMessaggi extends Thread {
 
     public void mess(String mss) {
         Condivisa.getInstance().setMess(mss);
+    }
+
+    private void PersoPesce(String mess) {
+        String[] vett = mess.split(";");
+        if (vett[1].equals("perso")) {
+            p.finito = true;
+        }
+    }
+
+    private void ElencoLato(String mess) {
+        String vett = mess.substring(2);
+        ArrayList<String> v = new ArrayList<String>(Arrays.asList(vett.split(";")));
+        l.v = v;
+    }
+
+    private void AggiornaPuntiAvversario(String mess) {
+        String[] vett = mess.split(";");
+        playerospite.setPunteggio(Integer.parseInt(vett[1]));
     }
 
 }

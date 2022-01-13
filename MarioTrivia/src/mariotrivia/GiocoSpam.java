@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  */
 public class GiocoSpam extends Thread {
 
-    Giocatore giocatore = new Giocatore();
+     Giocatore giocatore = new Giocatore();
     private JFrame jf;
     private boolean timer = false;
     private int secondimancanti = 10;
@@ -61,5 +61,4 @@ public class GiocoSpam extends Thread {
         }
     }
     
-
 }

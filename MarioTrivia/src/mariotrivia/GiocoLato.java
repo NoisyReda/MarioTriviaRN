@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  */
 public class GiocoLato extends Thread {
 
-    ArrayList<String> v = new ArrayList<String>();
+   ArrayList<String> v = new ArrayList<String>();
     int contatore = 0;
     boolean timer = false;
 

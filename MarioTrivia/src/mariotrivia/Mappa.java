@@ -20,8 +20,9 @@ import javax.swing.SwingUtilities;
  */
 public class Mappa extends javax.swing.JFrame {
 
-    private int ran;
+    private int ran, xpersonaggiolocale, ypersonaggiolocale, xpersonaggioospite, ypersonaggioospite;
     private boolean st;
+    ScambioMessaggi scambio;
 
     /**
      * Creates new form Mappa
@@ -32,6 +33,24 @@ public class Mappa extends javax.swing.JFrame {
         r.start();
         ran = 0;
         st = false;
+        xpersonaggiolocale = 20;
+        ypersonaggiolocale =25;
+        xpersonaggioospite = 20;
+        ypersonaggioospite = 35;
+    }
+
+    public Mappa(ScambioMessaggi s) {
+        initComponents();
+        Repaint r = new Repaint(this);
+        r.start();
+        ran = 0;
+        st = false;
+        scambio = s;
+        xpersonaggiolocale = s.playerlocale.getX();
+        ypersonaggiolocale = s.playerlocale.getY();
+        xpersonaggioospite = s.playerospite.getX();
+        ypersonaggioospite = s.playerospite.getY();
+
     }
 
     @Override
@@ -40,7 +59,13 @@ public class Mappa extends javax.swing.JFrame {
         Graphics offgc = offscreen.getGraphics();
         offgc.drawImage(new ImageIcon("src\\image\\Mappa.jpeg").getImage(), 0, 0, 1000, 1000, this);
         offgc.drawImage(new ImageIcon("src\\image\\dice.png").getImage(), 450, 130, 130, 130, this);
-        offgc.drawImage(new ImageIcon("src\\image\\1.png").getImage().getScaledInstance(256, 217, Image.SCALE_DEFAULT), 30, 15, this);
+        String str = "";
+        //str = "src\\image\\" + scambio.playerlocale.getImg() + ".png";
+        str = "src\\image\\1.png";
+        offgc.drawImage(new ImageIcon(str).getImage(), xpersonaggiolocale, ypersonaggiolocale, 30, 30, this);
+        //str = "src\\image\\" + scambio.playerospite.getImg() + ".png";
+        //offgc.drawImage(new ImageIcon(str).getImage(), xpersonaggiolocale, ypersonaggiolocale, 30, 30, this);
+
         if (ran == 0) {
             offgc.setFont(new Font(Font.SANS_SERIF, Font.ROMAN_BASELINE, 30));
             offgc.drawString("TIRA", 477, 182);
@@ -132,6 +157,25 @@ public class Mappa extends javax.swing.JFrame {
             }
         }
         g.drawImage(offscreen, 0, 50, null);
+        if (Condivisa.getInstance().getMess().equals("1")) {
+            xpersonaggiolocale += 50;
+            xpersonaggioospite += 50;
+        } else if (Condivisa.getInstance().getMess().equals("2")) {
+            xpersonaggiolocale += 100;
+            xpersonaggioospite += 100;
+        } else if (Condivisa.getInstance().getMess().equals("3")) {
+            xpersonaggiolocale += 150;
+            xpersonaggioospite += 150;
+        } else if (Condivisa.getInstance().getMess().equals("4")) {
+            xpersonaggiolocale += 200;
+            xpersonaggioospite += 200;
+        } else if (Condivisa.getInstance().getMess().equals("5")) {
+            xpersonaggiolocale += 250;
+            xpersonaggioospite += 250;
+        } else if (Condivisa.getInstance().getMess().equals("6")) {
+            xpersonaggiolocale += 300;
+            xpersonaggioospite += 300;
+        }
     }
 
     /**
@@ -159,11 +203,32 @@ public class Mappa extends javax.swing.JFrame {
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
         if (SwingUtilities.isLeftMouseButton(evt)) {
+            //&& scambio.playerlocale.isTurno()
             int x = evt.getX();
             int y = evt.getY();
             if (x > 450 && x < 580 && y > 182 && y < 310) {
                 Random i = new Random();
                 ran = i.nextInt(7 - 1 + 1) + 1;
+                //scambio.playerlocale.setTurno(false);
+                if (ran == 1) {
+                    xpersonaggiolocale += 50;
+                    xpersonaggioospite += 50;
+                } else if (ran == 2) {
+                    xpersonaggiolocale += 100;
+                    xpersonaggioospite += 100;
+                } else if (ran == 3) {
+                    xpersonaggiolocale += 150;
+                    xpersonaggioospite += 150;
+                } else if (ran == 4) {
+                    xpersonaggiolocale += 200;
+                    xpersonaggioospite += 200;
+                } else if (ran == 5) {
+                    xpersonaggiolocale += 250;
+                    xpersonaggioospite += 250;
+                } else if (ran == 6) {
+                    xpersonaggiolocale += 300;
+                    xpersonaggioospite += 300;
+                }
             }
         }
     }//GEN-LAST:event_formMouseClicked

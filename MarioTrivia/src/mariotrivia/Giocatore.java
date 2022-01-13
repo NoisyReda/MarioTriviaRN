@@ -13,13 +13,16 @@ public class Giocatore {
 
     private int punteggio;
     private String player;
-    private int img;
+    private int img, x, y, spostamento;
     private boolean turno, host;
 
     public Giocatore() {
         punteggio = 0;
         player = "";
         img = 0;
+        x = 0;
+        y = 0;
+        spostamento= 0;
         turno = false;
         host = false;
     }
@@ -52,6 +55,10 @@ public class Giocatore {
         this.punteggio = punteggio;
     }
 
+    public void aggiungiPunti(int punti) {
+        this.punteggio += punti;
+    }
+
     public String getPlayer() {
         return player;
     }
@@ -66,6 +73,22 @@ public class Giocatore {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
 }
