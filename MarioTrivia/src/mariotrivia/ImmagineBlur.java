@@ -8,7 +8,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,7 +40,7 @@ public class ImmagineBlur extends javax.swing.JFrame {
             imgs[i] = new ImageIcon("src\\image\\BlurGame\\" + (i + 1) + ".png").getImage().getScaledInstance(280, 200, Image.SCALE_DEFAULT);
         }
         r.start();
-        Condivisa.getInstance().setTime(10);
+        Condivisa.getInstance().setTime(1);
         t = new TimerG();
         t.start();
         count = 0;
@@ -64,13 +63,14 @@ public class ImmagineBlur extends javax.swing.JFrame {
         }
         if (Condivisa.getInstance().getTimer() == 0 || count > 0) {
             count++;
-            if (!check && tim) {
+            if (!check && !tim) {
                 Random ran = new Random();
                 do {
                     rand = ran.nextInt(5 - 0 + 1) + 0;
                     if (rand % 2 != 0) {
                         offgc.drawImage(imgs[rand], 360, 130, null);
                         check = true;
+                        tim = true;
                     }
                 } while (!check);
             } else if (tim == true) {
@@ -98,6 +98,15 @@ public class ImmagineBlur extends javax.swing.JFrame {
             lost = true;
         }
         g.drawImage(offscreen, 0, 50, null);
+        if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'I') {
+            if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == '3' && !lost) {
+                this.hide();
+            } else if (!lost) {
+                System.out.println("sbagliato");
+            } else {
+                System.out.println("tempo");
+            }
+        }
     }
 
     /**

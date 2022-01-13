@@ -9,7 +9,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -25,57 +24,145 @@ public class Tris extends javax.swing.JFrame {
     private int cx[];
     private int cy[];
     private char situa[];
+    private int count;
+    private boolean posO[];
+    private boolean lost;
+    private boolean win;
+    private TimerG t;
+    private boolean start;
+    private int tnt;
 
     /**
      * Creates new form Tris
      */
     public Tris() {
         initComponents();
-        pos = new boolean[18];
-        cx = new int[18];
-        cy = new int[18];
+        pos = new boolean[9];
+        cx = new int[9];
+        cy = new int[9];
         tr1 = false;
-        situa = new char[36];
+        situa = new char[9];
         for (int i = 0; i < situa.length; i++) {
-            situa[i] = (char) i;
+            situa[i] = (char) (i + 97);
         }
         Repaint r = new Repaint(this);
         r.start();
+        Condivisa.getInstance().setTime(10);
+        t = new TimerG();
+        t.start();
+        count = 0;
+        lost = false;
+        posO = new boolean[9];
+        for (int i = 0; i < posO.length; i++) {
+            posO[i] = false;
+        }
+        setcxy();
+        win = false;
+        start = true;
+        tnt = 0;
     }
 
     @Override
     public void paint(Graphics g) {
         Image offscreen = createImage(this.getWidth(), this.getHeight());
         Graphics offgc = offscreen.getGraphics();
-        for (int i = 0, l = 200; i < 5; i++, l++) {
-            offgc.drawLine(l, 150, l, 650);
+        if (count == 1) {
+            Condivisa.getInstance().setTime(10);
+            t = new TimerG();
+            t.start();
+            count++;
         }
-        for (int i = 0, l = 400; i < 5; i++, l++) {
-            offgc.drawLine(l, 150, l, 650);
-        }
-        for (int i = 0, l = 320; i < 5; i++, l++) {
-            offgc.drawLine(50, l, 550, l);
-        }
-        for (int i = 0, l = 480; i < 5; i++, l++) {
-            offgc.drawLine(50, l, 550, l);
-        }
-        boolean start = false;
-        for (int i = 0; i < pos.length; i++) {
-            if (pos[i] == true) {
-                offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
-                offgc.drawString("X", cx[i], cy[i]);
-                situa[i] = 'X';
-                //offgc.drawString("O", cx[i], cy[i]);
+        if (Condivisa.getInstance().getTimer() == 0 || count > 0) {
+            count++;
+            for (int i = 0, l = 200; i < 5; i++, l++) {
+                offgc.drawLine(l, 150, l, 650);
             }
+            for (int i = 0, l = 400; i < 5; i++, l++) {
+                offgc.drawLine(l, 150, l, 650);
+            }
+            for (int i = 0, l = 320; i < 5; i++, l++) {
+                offgc.drawLine(50, l, 550, l);
+            }
+            for (int i = 0, l = 480; i < 5; i++, l++) {
+                offgc.drawLine(50, l, 550, l);
+            }
+            for (int i = 0; i < pos.length; i++) {
+                if (pos[i] == true && !posO[i]) {
+                    offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
+                    if (Condivisa.getInstance().getGio().isHost()) {
+                        offgc.drawString("X", cx[i], cy[i]);
+                        situa[i] = 'X';
+                    } else {
+                        offgc.drawString("O", cx[i], cy[i]);
+                        situa[i] = 'O';
+                    }
+                } else if (posO[i]) {
+                    if (situa[i] == 'X') {
+                        offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
+                        offgc.drawString("X", cx[i], cy[i]);
+                    } else {
+                        offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
+                        offgc.drawString("O", cx[i], cy[i]);
+                    }
+                }
+            }
+            if (checkWin() != null) {
+                offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
+                offgc.setColor(Color.RED);
+                offgc.drawString(String.valueOf(situa[checkWin()[0]]), cx[checkWin()[0]], cy[checkWin()[0]]);
+                offgc.drawString(String.valueOf(situa[checkWin()[1]]), cx[checkWin()[1]], cy[checkWin()[1]]);
+                offgc.drawString(String.valueOf(situa[checkWin()[2]]), cx[checkWin()[2]], cy[checkWin()[2]]);
+                win = true;
+            }
+            if (count > 0) {
+                offgc.setFont(new Font("Sanserif", Font.BOLD, 150));
+                offgc.drawString(String.valueOf(Condivisa.getInstance().getTimer()), 275, 110);
+            }
+        } else {
+            offgc.setFont(new Font("Sanserif", Font.BOLD, 150));
+            offgc.drawString(String.valueOf(Condivisa.getInstance().getTimer()), 335, 340);
         }
-        if (checkWin() != null) {
-            offgc.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 130));
-            offgc.setColor(Color.RED);
-            offgc.drawString(String.valueOf(situa[checkWin()[0]]), cx[checkWin()[0]], cy[checkWin()[0]]);
-            offgc.drawString(String.valueOf(situa[checkWin()[1]]), cx[checkWin()[1]], cy[checkWin()[1]]);
-            offgc.drawString(String.valueOf(situa[checkWin()[2]]), cx[checkWin()[2]], cy[checkWin()[2]]);
+        if (count > 1 && Condivisa.getInstance().getTimer() == 0) {
+            lost = true;
+            win = true;
         }
         g.drawImage(offscreen, 0, 50, null);
+        if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'T') {
+            start = true;
+            if (Condivisa.getInstance().getGio().isHost()) {
+                situa[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = 'O';
+                pos[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = true;
+                posO[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = true;
+                Condivisa.getInstance().setMess("");
+            } else {
+                situa[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = 'X';
+                pos[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = true;
+                posO[Integer.parseInt(Condivisa.getInstance().getMess().split(";")[1]) - 1] = true;
+                Condivisa.getInstance().setMess("");
+            }
+        }
+        if (lost || win || tnt > 2) {
+            this.hide();
+        }
+        int counter = 0;
+        for (int i = 0; i < situa.length; i++) {
+            if (pos[i] == true || posO[i] == true) {
+                counter++;
+            }
+        }
+        if (counter == 9 && !win && !lost) {
+            for (int i = 0; i < pos.length; i++) {
+                pos[i] = false;
+            }
+            for (int i = 0; i < posO.length; i++) {
+                posO[i] = false;
+            }
+            for (int i = 0; i < situa.length; i++) {
+                situa[i] = (char) (i + 97);
+            }
+            tr1 = false;
+            tnt++;
+        }
     }
 
     private int[] checkWin() {
@@ -164,104 +251,133 @@ public class Tris extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        if (SwingUtilities.isLeftMouseButton(evt)) {
+        if (SwingUtilities.isLeftMouseButton(evt) && start) {
             int x = evt.getX();
             int y = evt.getY();
             if (!tr1) {
-                if (x > 49 && x < 198 && y > 199 && y < 370) {
-                    cx[0] = Math.round((198 - 49) / 2);
-                    cy[0] = Math.round((370 - 199) / 2) + 190;
+                if (x > 49 && x < 198 && y > 199 && y < 370 && situa[0] == 'a') {
                     pos[0] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
                     try {
                         Condivisa.getInstance().getSc().Scrivi("T;1");
                     } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (x > 49 && x < 198 && y > 373 && y < 530) {
-                    cx[1] = Math.round((198 - 49) / 2);
-                    cy[1] = Math.round((530 - 20) / 2) + 190;
+                if (x > 49 && x < 198 && y > 373 && y < 530 && situa[1] == 'b') {
                     pos[1] = true;
-                    try {
-                        Condivisa.getInstance().getSc().Scrivi("T;4");
-                    } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (x > 49 && x < 198 && y > 534 && y < 699) {
-                    cx[2] = Math.round((198 - 49) / 2);
-                    cy[2] = Math.round((699 + 140) / 2) + 190;
-                    pos[2] = true;
-                    try {
-                        Condivisa.getInstance().getSc().Scrivi("T;7");
-                    } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (x > 203 && x < 400 && y > 199 && y < 369) {
-                    cx[3] = Math.round((400 - 203) + 60);
-                    cy[3] = Math.round((370 - 199) / 2) + 190;
-                    pos[3] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
                     try {
                         Condivisa.getInstance().getSc().Scrivi("T;2");
                     } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (x > 203 && x < 400 && y > 373 && y < 530) {
-                    cx[4] = Math.round((400 - 203) + 60);
-                    cy[4] = Math.round((530 - 20) / 2) + 190;
-                    pos[4] = true;
-                    try {
-                        Condivisa.getInstance().getSc().Scrivi("T;5");
-                    } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (x > 203 && x < 400 && y > 534 && y < 699) {
-                    cx[5] = Math.round((400 - 145));
-                    cy[5] = Math.round((699 + 140) / 2) + 190;
-                    pos[5] = true;
-                    try {
-                        Condivisa.getInstance().getSc().Scrivi("T;8");
-                    } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-                if (x > 403 && x < 551 && y > 199 && y < 370) {
-                    cx[6] = Math.round((550 - 120));
-                    cy[6] = Math.round((370 - 199) / 2) + 190;
-                    pos[6] = true;
+                if (x > 49 && x < 198 && y > 534 && y < 699 && situa[2] == 'c') {
+                    pos[2] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
                     try {
                         Condivisa.getInstance().getSc().Scrivi("T;3");
                     } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (x > 403 && x < 551 && y > 373 && y < 530) {
-                    cx[7] = Math.round((550 - 120));
-                    cy[7] = Math.round((530 - 20) / 2) + 190;
-                    pos[7] = true;
+                if (x > 203 && x < 400 && y > 199 && y < 369 && situa[3] == 'd') {
+                    pos[3] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;4");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (x > 203 && x < 400 && y > 373 && y < 530 && situa[4] == 'e') {
+                    pos[4] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;5");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (x > 203 && x < 400 && y > 534 && y < 699 && situa[5] == 'f') {
+                    pos[5] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
                     try {
                         Condivisa.getInstance().getSc().Scrivi("T;6");
                     } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
-                if (x > 403 && x < 551 && y > 534 && y < 699) {
-                    cx[8] = Math.round((550 - 120));
-                    cy[8] = Math.round((699 + 140) / 2) + 190;
+                if (x > 403 && x < 551 && y > 199 && y < 370 && situa[6] == 'g') {
+                    pos[6] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;7");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (x > 403 && x < 551 && y > 373 && y < 530 && situa[7] == 'h') {
+                    pos[7] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
+                    try {
+                        Condivisa.getInstance().getSc().Scrivi("T;8");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                if (x > 403 && x < 551 && y > 534 && y < 699 && situa[8] == 'i') {
                     pos[8] = true;
+                    start = false;
+                    Condivisa.getInstance().setTime(10);
                     try {
                         Condivisa.getInstance().getSc().Scrivi("T;9");
                     } catch (IOException ex) {
-                        Logger.getLogger(Tris.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(Tris.class
+                                .getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
-
         }
     }//GEN-LAST:event_formMousePressed
+
+    private void setcxy() {
+        cx[0] = Math.round((198 - 49) / 2);
+        cy[0] = Math.round((370 - 199) / 2) + 190;
+        cx[1] = Math.round((198 - 49) / 2);
+        cy[1] = Math.round((530 - 20) / 2) + 190;
+        cx[2] = Math.round((198 - 49) / 2);
+        cy[2] = Math.round((699 + 140) / 2) + 190;
+        cx[3] = Math.round((400 - 203) + 60);
+        cy[3] = Math.round((370 - 199) / 2) + 190;
+        cx[4] = Math.round((400 - 203) + 60);
+        cy[4] = Math.round((530 - 20) / 2) + 190;
+        cx[5] = Math.round((400 - 145));
+        cy[5] = Math.round((699 + 140) / 2) + 190;
+        cx[6] = Math.round((550 - 120));
+        cy[6] = Math.round((370 - 199) / 2) + 190;
+        cx[7] = Math.round((550 - 120));
+        cy[7] = Math.round((530 - 20) / 2) + 190;
+        cx[8] = Math.round((550 - 120));
+        cy[8] = Math.round((699 + 140) / 2) + 190;
+    }
 
     /**
      * @param args the command line arguments
