@@ -25,7 +25,7 @@ public class ScambioMessaggi extends Thread {
 
     DatagramSocket server, client;
     boolean connesso;
-    int porta = 12346;
+    int porta = 12345;
     JFrame frame = new JFrame();
     int stato = 0;
     InetAddress ipdestinazione;
@@ -36,7 +36,7 @@ public class ScambioMessaggi extends Thread {
     GestioneDomande g;
 
     public ScambioMessaggi(JFrame f) throws SocketException {
-        server = new DatagramSocket(12345);
+        server = new DatagramSocket(12346);
         client = new DatagramSocket();
         connesso = false;
         playerospite = new Giocatore();
@@ -58,7 +58,6 @@ public class ScambioMessaggi extends Thread {
                 Logger.getLogger(ScambioMessaggi.class.getName()).log(Level.SEVERE, null, ex);
             }
             String messaggio = new String(Packet.getData()).trim();
-            System.out.println("ricevuto"+messaggio);
             try {
                 Elabora(messaggio, Packet);
             } catch (IOException ex) {
@@ -269,7 +268,7 @@ public class ScambioMessaggi extends Thread {
 
     private void risposta(String mess) {
         String[] vett = mess.split(";");
-        if (vett[1].equals("v")){
+        if (vett[1].equals("v")) {
             playerospite.aggiungiPunti(10);
         }
     }

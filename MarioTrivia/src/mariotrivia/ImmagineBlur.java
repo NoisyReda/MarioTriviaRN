@@ -101,10 +101,17 @@ public class ImmagineBlur extends javax.swing.JFrame {
         if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'I') {
             if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == '3' && !lost) {
                 this.hide();
+                Condivisa.getInstance().getSc().playerospite.aggiungiPunti(10);
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (!lost) {
-                System.out.println("sbagliato");
+                this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else {
-                System.out.println("tempo");
+                this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             }
         }
     }

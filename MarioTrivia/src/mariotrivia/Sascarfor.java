@@ -89,23 +89,41 @@ public class Sascarfor extends javax.swing.JFrame {
         if (!"".equals(Condivisa.getInstance().getMess()) && Condivisa.getInstance().getMess().charAt(0) == 'S' && choose != ' ') {
             if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'c') {
                 this.hide();
+                Condivisa.getInstance().getGio().aggiungiPunti(10);
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 's') {
                 this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 'c') {
                 this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'c' && choose == 'f') {
                 this.hide();
+                Condivisa.getInstance().getGio().aggiungiPunti(10);
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 's' && choose == 'f') {
                 this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == 'f' && choose == 's') {
                 this.hide();
+                Condivisa.getInstance().getGio().aggiungiPunti(10);
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             } else if (Condivisa.getInstance().getMess().split(";")[1].charAt(0) == choose && res < 3) {
                 pos = 0;
                 lost = false;
                 choose = ' ';
                 res++;
             } else if (res > 2) {
-  this.hide();
+                this.hide();
+                Condivisa.getInstance().getGio().aggiungiPunti(5);
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
             }
         }
     }

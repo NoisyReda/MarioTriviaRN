@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static mariotrivia.SchermataDomande.int_random;
 
 /**
  *
@@ -167,9 +166,9 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }
-            SchermataGiocoLato sc;
-            sc = new SchermataGiocoLato(s);
-            sc.show();
+            this.hide();
+            Mappa m = new Mappa(Condivisa.getInstance().getSc());
+            m.show();
             this.hide();
 
         }
@@ -192,9 +191,9 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
             } catch (IOException ex) {
                 Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }
-            SchermataGiocoLato sc;
-            sc = new SchermataGiocoLato(s);
-            sc.show();
+            this.hide();
+            Mappa m = new Mappa(Condivisa.getInstance().getSc());
+            m.show();
             this.hide();
         }
     }//GEN-LAST:event_Personaggio1MouseClicked
@@ -217,9 +216,9 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
                 Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            SchermataGiocoLato sc;
-            sc = new SchermataGiocoLato(s);
-            sc.show();
+            this.hide();
+            Mappa m = new Mappa(Condivisa.getInstance().getSc());
+            m.show();
             this.hide();
         }
 
@@ -244,9 +243,9 @@ public class SelezionePersonaggio extends javax.swing.JFrame {
                 Logger.getLogger(SelezionePersonaggio.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            SchermataGiocoLato sc;
-            sc = new SchermataGiocoLato(s);
-            sc.show();
+            this.hide();
+            Mappa m = new Mappa(Condivisa.getInstance().getSc());
+            m.show();
             this.hide();
         }
 

@@ -60,7 +60,7 @@ public class SchermataGiocoPesci extends javax.swing.JFrame {
                     Pesce6.setVisible(false);
                 }
                 if (scambio.p.finito) {
-                    Mappa m = new Mappa();
+                    Mappa m = new Mappa(Condivisa.getInstance().getSc());
                     m.show();
                     this.hide();
                     break;

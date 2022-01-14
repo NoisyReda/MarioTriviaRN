@@ -132,6 +132,8 @@ public class SchermataGiocoSpam extends javax.swing.JFrame {
                 if (counterlocale == arrivo) {
                     vittoriasconfitta = true;
                     s.playerlocale.aggiungiPunti(10);
+                    Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                    m.show();
                 }
             }
         }

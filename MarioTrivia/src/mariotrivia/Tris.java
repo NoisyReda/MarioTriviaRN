@@ -142,7 +142,21 @@ public class Tris extends javax.swing.JFrame {
             }
         }
         if (lost || win || tnt > 2) {
-            this.hide();
+            if (win) {
+                Condivisa.getInstance().getGio().aggiungiPunti(10);
+                this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
+            } else if (lost) {
+                Condivisa.getInstance().getGio().setPunteggio(Condivisa.getInstance().getGio().getPunteggio() - 10);
+                this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
+            } else {
+                this.hide();
+                Mappa m = new Mappa(Condivisa.getInstance().getSc());
+                m.show();
+            }
         }
         int counter = 0;
         for (int i = 0; i < situa.length; i++) {
